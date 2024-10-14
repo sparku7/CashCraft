@@ -27,10 +27,10 @@ export const GoalsProvider = ({ children }) => {
         setGoals([...goals, { name, target, saved: 0 }]);
     };
 
-    const editGoal = (name, target) => {
+    const editGoal = (index, name, target) => {
         setGoals((prevGoals) =>
-            prevGoals.map((goal) =>
-                goal.name === name ? { ...goal, target: Number(target) } : goal
+            prevGoals.map((goal, i) =>
+                i === index ? { ...goal, name, target: Number(target) } : goal
             )
         );
     };
@@ -40,7 +40,16 @@ export const GoalsProvider = ({ children }) => {
     };
 
     return (
-        <GoalsContext.Provider value={{ goals, totalGoals, completedGoals, addGoal, editGoal, removeGoal }}>
+        <GoalsContext.Provider 
+            value={{ 
+                goals, 
+                setGoals, 
+                totalGoals, 
+                completedGoals, 
+                addGoal, 
+                editGoal, 
+                removeGoal 
+            }}>
             {children}
         </GoalsContext.Provider>
     );

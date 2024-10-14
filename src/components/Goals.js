@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Goals.css';
 import { useGoals } from './GoalsContext';
+import { useSavings } from './SavingsContext';
 
 const Goals = () => {
-    const { goals, addGoal, removeGoal, editGoal } = useGoals();
+    const { goals, addGoal, removeGoal, editGoal, setGoals } = useGoals();
+    const { setTotalSavings } = useSavings(); 
     const [newGoal, setNewGoal] = useState({ name: '', target: '' });
     const [showModal, setShowModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [currentGoalIndex, setCurrentGoalIndex] = useState(null);
     const [savingsAmount, setSavingsAmount] = useState('');
+    const [selectedGoal, setSelectedGoal] = useState('');
+
+    useEffect(() => {
+     
+        const totalSavings = goals.reduce((acc, goal) => acc + goal.saved, 0);
+        setTotalSavings(totalSavings);
+    }, [goals, setTotalSavings]); 
 
     const openEditModal = (index) => {
         setCurrentGoalIndex(index);
@@ -27,13 +36,19 @@ const Goals = () => {
         setShowModal(false);
     };
 
-    const handleAddSavings = (goalName) => {
-        const goal = goals.find(g => g.name === goalName);
-        if (goal) {
-            goal.saved += Number(savingsAmount);
+    const handleAddSavings = () => {
+        const goalIndex = goals.findIndex(g => g.name === selectedGoal);
+        if (goalIndex !== -1) {
+            const updatedGoals = [...goals];
+            updatedGoals[goalIndex].saved += Number(savingsAmount);
+            setSavingsAmount('');
+            setSelectedGoal('');
+            setGoals(updatedGoals); 
         }
-        setSavingsAmount('');
     };
+
+
+    const totalSavings = goals.reduce((acc, goal) => acc + goal.saved, 0);
 
     return (
         <div className="goals">
@@ -41,6 +56,11 @@ const Goals = () => {
                 <h1>Your Savings Goals</h1>
                 <p>Track your savings goals and achieve your financial dreams!</p>
             </header>
+
+            <section className="total-savings">
+                <h3>Total Savings</h3>
+                <p>£{totalSavings}</p>
+            </section>
 
             <section className="goal-list">
                 <h3>Goals</h3>
@@ -60,7 +80,7 @@ const Goals = () => {
 
             <section className="add-savings">
                 <h3>Add Savings</h3>
-                <select onChange={(e) => setNewGoal({ ...newGoal, name: e.target.value })}>
+                <select onChange={(e) => setSelectedGoal(e.target.value)}>
                     <option value="">Select Goal</option>
                     {goals.map((goal) => (
                         <option key={goal.name} value={goal.name}>{goal.name}</option>
@@ -72,7 +92,7 @@ const Goals = () => {
                     value={savingsAmount}
                     onChange={(e) => setSavingsAmount(e.target.value)}
                 />
-                <button onClick={() => handleAddSavings(newGoal.name)}>Add Savings</button>
+                <button onClick={handleAddSavings}>Add Savings</button>
             </section>
 
             {showModal && (
@@ -98,7 +118,6 @@ const Goals = () => {
                     </div>
                 </div>
             )}
-
 
             {editModal && (
                 <div className="modal">
