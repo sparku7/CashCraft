@@ -1,7 +1,7 @@
 .dashboard {
     padding: 20px;
     padding-top: 70px;
-   
+
 }
 
 header {
@@ -16,7 +16,7 @@ header {
 }
 
 .balance {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -26,12 +26,12 @@ header {
 }
 
 .recent-transactions {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 45%; 
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    width: 45%;
+    overflow-x: auto;
 }
 
 .goals {
@@ -90,24 +90,24 @@ button.craft-button {
 
     .recent-transactions table {
         display: block;
-        overflow-x: auto; 
-        white-space: nowrap; 
+        overflow-x: auto;
+        white-space: nowrap;
     }
 
     .recent-transactions th,
     .recent-transactions td {
         display: block;
-        text-align: right; 
+        text-align: right;
     }
 
     .recent-transactions th {
-        text-align: left; 
-        font-weight: bold; 
+        text-align: left;
+        font-weight: bold;
     }
 
     .recent-transactions tr {
-        display: flex; 
-        justify-content: space-between; 
-        padding: 10px 0; 
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
     }
 }
