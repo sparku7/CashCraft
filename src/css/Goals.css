@@ -1,0 +1,46 @@
+/* src/components/Goals.css */
+.goals {
+    padding: 20px;
+    background-color: #f5f5dc; /* Light beige background */
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .goal-overview {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .goal-list {
+    background-color: #ffffff; /* White background for cards */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .goal-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .goal-list li {
+    margin-bottom: 10px;
+  }
+  
+  .tips {
+    background-color: #ffffff;
+    padding: 15px;
+  }
+  
+  button {
+    background-color: #4caf50; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

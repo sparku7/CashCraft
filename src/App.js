@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import Budget from './components/Budget';
+import Goals from './components/Goals';
+import Quest from './components/Quests';
+import Navbar from './components/Navbar';
+import { GoalsProvider } from './components/GoalsContext'; // Import the GoalsProvider
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GoalsProvider> {/* Wrap your application with the GoalsProvider */}
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/budget" element={<Budget />} />
+          <Route path="/goals" element={<Goals />} />
+          <Route path="/quests" element={<Quest />} />
+        </Routes>
+      </Router>
+    </GoalsProvider>
   );
-}
+};
 
 export default App;

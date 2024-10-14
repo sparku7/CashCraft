@@ -1,0 +1,107 @@
+@font-face {
+    font-family: 'MinecraftRegular'; 
+    src: url('../fonts/MinecraftRegular.otf') format('opentype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+
+body {
+    margin: 0;
+    font-family: 'MinecraftRegular';
+    box-sizing: border-box;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+  
+
+.navbar {
+    background-image: url('../images/navbar-background.webp');
+    background-size: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px; 
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+  
+  .logo {
+    font-size: 40px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+  }
+  
+  .hamburger {
+    display: none;
+    font-size: 28px;
+    color: black;
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+    margin: 0; 
+  }
+  
+  li {
+    margin: 0;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+    font-size: 25px;
+    padding: 10px;
+    transition: background 0.3s;
+  }
+  
+  a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+  }
+  
+
+  @media (max-width: 768px) {
+    .hamburger {
+      display: block;
+    }
+  
+    ul {
+        background-image: url('../images/navbar-background.webp'); 
+        background-color: rgba(76, 175, 80, 0.5);
+        background-size: 90%;
+        display: none; 
+        flex-direction: column; 
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 10px 0;
+      }
+      
+      
+      
+  
+    ul.active {
+      display: flex; 
+    }
+  
+    li {
+      text-align: center;
+      width: 100%;
+    }
+  }
+  
