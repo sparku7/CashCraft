@@ -17,20 +17,26 @@ const achievements = [
 
 const AchievementsPage = () => {
   const { totalSavings } = useSavings(); 
-  const [updatedAchievements, setUpdatedAchievements] = useState(achievements);
+  const [updatedAchievements, setUpdatedAchievements] = useState(() => {
+    // Load saved achievements from local storage on initial render
+    const savedAchievements = JSON.parse(localStorage.getItem('updatedAchievements'));
+    return savedAchievements || achievements; // Return saved achievements or default achievements
+  });
 
   useEffect(() => {
-    const updated = achievements.map((achievement) => {
-      let completion = '0%';
+    const updated = updatedAchievements.map((achievement) => {
+      let completion = achievement.completion; // Start with current completion
       
       if (achievement.id === 1 && totalSavings >= 1000) completion = '100%';
       else if (achievement.id === 2 && totalSavings >= 5000) completion = '100%';
       else if (achievement.id === 3 && totalSavings >= 10000) completion = '100%';
-      
+
       return { ...achievement, completion };
     });
 
     setUpdatedAchievements(updated);
+    // Save updated achievements to local storage
+    localStorage.setItem('updatedAchievements', JSON.stringify(updated));
   }, [totalSavings]); 
 
   return (

@@ -10,9 +10,9 @@ export const GoalsProvider = ({ children }) => {
     const [goals, setGoals] = useState(() => {
         const savedGoals = JSON.parse(localStorage.getItem('savingsGoals'));
         return savedGoals || [
-            { name: 'Save for a New Phone', target: 800, saved: 400 },
-            { name: 'Vacation', target: 1500, saved: 600 },
-            { name: 'Emergency Fund', target: 1000, saved: 300 },
+            { name: 'Save for a New Phone', target: 800, saved: 100 },
+            { name: 'Vacation', target: 1500, saved: 100 },
+            { name: 'Emergency Fund', target: 1000, saved: 100 },
         ];
     });
 

@@ -6,13 +6,13 @@ import Goals from './components/Goals';
 import Quest from './components/Quests';
 import Navbar from './components/Navbar';
 import RewardsPage from './components/Rewards';
-import { GoalsProvider } from './components/GoalsContext'; // Import the GoalsProvider
-import { SavingsProvider } from './components/SavingsContext'; // Import the SavingsProvider
+import { GoalsProvider } from './components/GoalsContext';
+import { SavingsProvider } from './components/SavingsContext'; 
 
 const App = () => {
   return (
-    <SavingsProvider> {/* Wrap your application with the SavingsProvider */}
-      <GoalsProvider> {/* Wrap your application with the GoalsProvider */}
+    <SavingsProvider> 
+      <GoalsProvider>
         <Router>
           <Navbar />
           <Routes>

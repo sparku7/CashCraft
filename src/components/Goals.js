@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../css/Goals.css';
 import { useGoals } from './GoalsContext';
 import { useSavings } from './SavingsContext';
+import { useNavigate } from 'react-router-dom';
 
 const Goals = () => {
     const { goals, addGoal, removeGoal, editGoal, setGoals } = useGoals();
@@ -12,12 +13,24 @@ const Goals = () => {
     const [currentGoalIndex, setCurrentGoalIndex] = useState(null);
     const [savingsAmount, setSavingsAmount] = useState('');
     const [selectedGoal, setSelectedGoal] = useState('');
+    const [achievement, setAchievement] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-     
         const totalSavings = goals.reduce((acc, goal) => acc + goal.saved, 0);
         setTotalSavings(totalSavings);
-    }, [goals, setTotalSavings]); 
+
+           if (totalSavings >= 10000 && !localStorage.getItem('achieved_10000')) {
+            setAchievement('Congratulations! You have achieved: £10,000 Saved!');
+            localStorage.setItem('achieved_10000', 'true');
+        } else if (totalSavings >= 5000 && !localStorage.getItem('achieved_5000')) {
+            setAchievement('Congratulations! You have achieved: £5,000 Saved!');
+            localStorage.setItem('achieved_5000', 'true');
+        } else if (totalSavings >= 1000 && !localStorage.getItem('achieved_1000')) {
+            setAchievement('Congratulations! You have achieved: £1,000 Saved!');
+            localStorage.setItem('achieved_1000', 'true');
+        }
+    }, [goals, setTotalSavings]);
 
     const openEditModal = (index) => {
         setCurrentGoalIndex(index);
@@ -47,8 +60,16 @@ const Goals = () => {
         }
     };
 
-
     const totalSavings = goals.reduce((acc, goal) => acc + goal.saved, 0);
+
+    const handlePopupClose = () => {
+        setAchievement(null);
+    };
+
+    const handleViewReward = () => {
+        handlePopupClose();
+        navigate('/rewards');
+    };
 
     return (
         <div className="goals">
@@ -139,6 +160,17 @@ const Goals = () => {
                             className="modal-input"
                         />
                         <button onClick={updateGoal}>Update Goal</button>
+                    </div>
+                </div>
+            )}
+
+            {achievement && (
+                <div className="modal achievement-popup">
+                    <div className="popup-content">
+                        <h2>Achievement Unlocked!</h2>
+                        <p>{achievement}</p>
+                        <button onClick={handleViewReward}>View Reward</button>
+                        <button onClick={handlePopupClose}>Close</button>
                     </div>
                 </div>
             )}
