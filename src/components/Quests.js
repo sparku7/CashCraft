@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import '../css/Quests.css';
+import QuestProgress from './QuestProgress';
+import QuestList from './QuestList';
+import QuestCreation from './QuestCreation';
 
 const Quests = () => {
   const [quests, setQuests] = useState([
@@ -9,7 +12,7 @@ const Quests = () => {
   ]);
 
   const [newQuest, setNewQuest] = useState('');
-
+  const [errorMessage, setErrorMessage] = useState('');
 
   const completeQuest = (id) => {
     const updatedQuests = quests.map((quest) =>
@@ -19,7 +22,11 @@ const Quests = () => {
   };
 
   const addQuest = () => {
-    if (newQuest.trim() === '') return;
+    if (newQuest.trim() === '') {
+      setErrorMessage('Quest name cannot be empty.');
+      return;
+    }
+    setErrorMessage('');
     const newId = quests.length > 0 ? quests[quests.length - 1].id + 1 : 1;
     setQuests([...quests, { id: newId, name: newQuest, completed: false }]);
     setNewQuest('');
@@ -39,53 +46,32 @@ const Quests = () => {
         <p>Complete fun challenges to improve your financial skills!</p>
       </header>
 
-      <section className="progress-bar">
-        <h3>Quest Progress</h3>
-        <progress value={completedQuests} max={totalQuests}></progress>
-        <p>{completedQuests} of {totalQuests} quests completed</p>
-      </section>
+      <QuestProgress completed={completedQuests} total={totalQuests} />
 
       <section className="active-quests">
         <h3>Active Quests</h3>
-        <div className="quest-cards-container">
-          {quests
-            .filter((quest) => !quest.completed)
-            .map((quest) => (
-              <div key={quest.id} className="quest-card">
-                <span>{quest.name}</span>
-                <button onClick={() => completeQuest(quest.id)}>Complete</button>
-                <button className="delete-button" onClick={() => deleteQuest(quest.id)}>Delete</button>
-              </div>
-            ))}
-        </div>
+        <QuestList 
+          quests={quests.filter((quest) => !quest.completed)} 
+          onComplete={completeQuest} 
+          onDelete={deleteQuest} 
+        />
       </section>
 
       <section className="completed-quests">
         <h3>Completed Quests</h3>
-        <div className="quest-cards-container">
-          {quests
-            .filter((quest) => quest.completed)
-            .map((quest) => (
-              <div key={quest.id} className="quest-card completed">
-                <span>{quest.name}</span>
-                <button onClick={() => completeQuest(quest.id)}>Undo</button>
-              </div>
-            ))}
-        </div>
-      </section>
-
-
-      <section className="quest-creation">
-        <h3>Create a New Quest</h3>
-        <input
-          type="text"
-          placeholder="New Quest Name"
-          className="quest-input"
-          value={newQuest}
-          onChange={(e) => setNewQuest(e.target.value)}
+        <QuestList 
+          quests={quests.filter((quest) => quest.completed)} 
+          onComplete={completeQuest} 
+          onDelete={deleteQuest} 
         />
-        <button onClick={addQuest}>Add Quest</button>
       </section>
+
+      <QuestCreation 
+        newQuest={newQuest} 
+        setNewQuest={setNewQuest} 
+        addQuest={addQuest} 
+        errorMessage={errorMessage} 
+      />
     </div>
   );
 };
