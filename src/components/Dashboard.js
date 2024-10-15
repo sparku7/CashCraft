@@ -4,6 +4,7 @@ import { useGoals } from './GoalsContext';
 import Balance from './Balance';
 import RecentTransactions from './RecentTransactions';
 import Goal from './Goal';
+import ThemeToggle from './ThemeToggle';
 
 
 const Dashboard = () => {
@@ -21,6 +22,7 @@ const Dashboard = () => {
                 <h1>CashCraft</h1>
                 <h2>Take Charge of Your Finances</h2>
             </header>
+            <ThemeToggle />
 
             <section className="overview">
                 <Balance total={totalBalance} />

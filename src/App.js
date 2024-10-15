@@ -10,14 +10,13 @@ import { GoalsProvider } from './components/GoalsContext';
 import { SavingsProvider } from './components/SavingsContext'; 
 import './app.css';
 
-
 const App = () => {
   return (
     <SavingsProvider> 
       <GoalsProvider>
         <Router>
           <Navbar />
-          <Routes>
+               <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/budget" element={<Budget />} />
             <Route path="/goals" element={<Goals />} />
