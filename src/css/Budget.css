@@ -105,15 +105,15 @@ ul {
 }
 
 .category-item {
-  width: 200px; /* Fixed width */
-  height: 150px; /* Fixed height */
-  margin: 10px; /* Space between items */
+  width: 200px;
+  height: 150px;
+  margin: 10px;
   box-sizing: border-box;
-  display: flex; /* Use flexbox for inner content */
-  flex-direction: column; /* Arrange content vertically */
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  padding-top:100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
   padding-bottom: 120px;
 }
 

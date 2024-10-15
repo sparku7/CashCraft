@@ -20,7 +20,7 @@ const Budget = () => {
             backgroundColor: [],
         }]
     });
-    
+
     const isOverBudget = (category) => category.spent > category.budget;
 
     const openEditModal = (index) => {
@@ -46,7 +46,7 @@ const Budget = () => {
     const addCategory = (name, budget) => {
         const newCategories = [...categories, { name, budget: Number(budget), spent: 0 }];
         setCategories(newCategories);
-        setNewCategory({ name: '', budget: '' }); 
+        setNewCategory({ name: '', budget: '' });
         setShowModal(false);
         updateChartData(newCategories);
     };
@@ -92,8 +92,8 @@ const Budget = () => {
                 <h1>Your Budget Overview</h1>
                 <p>Keep track of your expenses and plan for the future!</p>
             </header>
-            
-            {/* Container for categories */}
+
+            { }
             <div className="category-container">
                 <CategoryList
                     categories={categories}
@@ -104,7 +104,7 @@ const Budget = () => {
                     setShowModal={setShowModal}
                 />
             </div>
-    
+
             <BudgetChart data={data} />
             <CategoryModal
                 isOpen={showModal}

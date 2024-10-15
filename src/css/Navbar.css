@@ -13,12 +13,30 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+
+.logout-button {
+  font-family: var(--font-family);
+  border: 2px solid black;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: black;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+ul.active .logout-button {
+  width: 100px;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+
 .navbar.minecraft {
-  background-image: url('../images/navbar-background.webp'); /* Default theme */
+  background-image: url('../images/navbar-background.webp');
 }
 
 .navbar.barbie {
-  background-image: url('../images/barbie-background.jpg'); 
+  background-image: url('../images/barbie-background.jpg');
 }
 
 .navbar.halloween {
@@ -38,9 +56,9 @@
   cursor: pointer;
 }
 
+
 ul {
   list-style-type: none;
-  padding: 0;
   display: flex;
   gap: 15px;
   margin: 0;
@@ -63,27 +81,48 @@ a:hover {
   border-radius: 5px;
 }
 
+
 @media (max-width: 768px) {
   .hamburger {
-      display: block; /* Show hamburger icon */
+    display: block;
   }
 
   ul {
-      display: none; /* Hidden by default */
-      flex-direction: column;
-      position: absolute;
-      top: 60px; /* Adjust based on your navbar height */
-      left: 0;
-      width: 100%;
-      padding: 10px 0;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 75%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 300px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    z-index: 1000;
   }
 
   ul.active {
-      display: flex; /* Show when active */
+    display: flex;
   }
 
   li {
-      text-align: center;
-      width: 100%;
+    margin: 5px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  a {
+    color: #333;
+    font-size: 18px;
+    padding: 12px 20px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  a:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007bff;
   }
 }

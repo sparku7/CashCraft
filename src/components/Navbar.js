@@ -42,7 +42,10 @@ const Navbar = () => {
         <li><Link to="/quests" onClick={toggleMenu}>Quests</Link></li>
         <li><Link to="/achievements" onClick={toggleMenu}>Achievements</Link></li>
         <li>
-          <button onClick={handleLogout} style={{border: '2px solid black', }}>Logout</button>
+        <li>
+  <button onClick={handleLogout} className="logout-button">Logout</button>
+</li>
+
         </li>
       </ul>
     </nav>
