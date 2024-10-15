@@ -124,8 +124,11 @@ const Budget = () => {
 
             <section className="budget-chart">
                 <h3>Spending by Category</h3>
-                <Pie data={data} />
+                <div className="pie-chart-container">
+                    <Pie data={data} width={250} height={250} />
+                </div>
             </section>
+
 
             <section className="tips">
                 <h3>Budgeting Tips</h3>

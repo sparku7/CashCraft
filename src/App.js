@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import RewardsPage from './components/Rewards';
 import { GoalsProvider } from './components/GoalsContext';
 import { SavingsProvider } from './components/SavingsContext'; 
+import './app.css';
+
 
 const App = () => {
   return (

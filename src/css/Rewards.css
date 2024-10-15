@@ -1,20 +1,16 @@
 .achievements-page {
     padding: 20px;
     padding-top: 70px;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.achievements-grid {
+  }
+  
+  .achievements-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px; 
-}
+    gap: 20px;
+    margin-top: 20px;
+  }
 
-.achievement-item {
+  .achievement-item {
     background-color: #ffffff;
     padding: 15px;
     border-radius: 8px;
@@ -27,9 +23,6 @@ h1 {
     height: 100px; 
     margin-bottom: 10px; 
 }
+  
 
-@media (max-width: 768px) {
-    .achievements-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+  
