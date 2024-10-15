@@ -5,7 +5,7 @@ import Budget from './components/Budget';
 import Goals from './components/Goals';
 import Quest from './components/Quests';
 import Navbar from './components/Navbar';
-import RewardsPage from './components/Rewards';
+import AchievementsPage from './components/AchievementsPage';
 import { GoalsProvider } from './components/GoalsContext';
 import { SavingsProvider } from './components/SavingsContext'; 
 import './app.css';
@@ -22,7 +22,7 @@ const App = () => {
             <Route path="/budget" element={<Budget />} />
             <Route path="/goals" element={<Goals />} />
             <Route path="/quests" element={<Quest />} />
-            <Route path="/rewards" element={<RewardsPage />} />
+            <Route path="/achievements" element={<AchievementsPage />} />
           </Routes>
         </Router>
       </GoalsProvider>

@@ -20,7 +20,7 @@ const Navbar = () => {
                 <li><Link to="/budget" onClick={toggleMenu}>Budget</Link></li>
                 <li><Link to="/goals" onClick={toggleMenu}>Goals</Link></li>
                 <li><Link to="/quests" onClick={toggleMenu}>Quests</Link></li>
-                <li><Link to="/rewards" onClick={toggleMenu}>Rewards</Link></li> 
+                <li><Link to="/achievements" onClick={toggleMenu}>Achievements</Link></li> 
             </ul>
         </nav>
     );

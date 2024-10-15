@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import '../css/Rewards.css'; 
+import '../css/Achievements.css'; 
 import { useSavings } from './SavingsContext'; 
+import AchievementsGrid from './AchievementsGrid';
 
 const achievements = [
   { id: 1, name: '£1,000 Saved', imageUrl: require('../images/minecraft-award1.png'), completion: '0%' },
@@ -18,7 +19,6 @@ const achievements = [
 const AchievementsPage = () => {
   const { totalSavings } = useSavings(); 
   const [updatedAchievements, setUpdatedAchievements] = useState(() => {
-
     const savedAchievements = JSON.parse(localStorage.getItem('updatedAchievements'));
     return savedAchievements || achievements; 
   });
@@ -42,25 +42,7 @@ const AchievementsPage = () => {
   return (
     <div className="achievements-page">
       <h1>Achievements Overview</h1>
-      <div className="achievements-grid">
-        {updatedAchievements.map((achievement) => (
-          <div className="achievement-item" key={achievement.id}>
-            {achievement.completion === '100%' ? (
-              <>
-                <img src={achievement.imageUrl} alt={achievement.name} />
-                <h2>{achievement.name}</h2>
-                <p>Completion: {achievement.completion}</p>
-              </>
-            ) : (
-              <div className="achievement-incomplete">
-                <h2>{achievement.name}</h2>
-                <p>Completion: {achievement.completion}</p>
-                <p>Keep going to unlock this achievement!</p>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+      <AchievementsGrid achievements={updatedAchievements} />
     </div>
   );
 };

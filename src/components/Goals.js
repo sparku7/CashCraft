@@ -70,9 +70,9 @@ const Goals = () => {
         setAchievement(null);
     };
 
-    const handleViewReward = () => {
+    const handleViewAchievement= () => {
         handlePopupClose();
-        navigate('/rewards');
+        navigate('/achievements');
     };
 
     return (
@@ -128,7 +128,7 @@ const Goals = () => {
 
             <AchievementPopup 
                 achievement={achievement} 
-                handleViewReward={handleViewReward} 
+                handleViewAchievement={handleViewAchievement} 
                 handlePopupClose={handlePopupClose} 
             />
 

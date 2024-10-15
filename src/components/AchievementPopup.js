@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AchievementPopup = ({ achievement, handleViewReward, handlePopupClose }) => {
+const AchievementPopup = ({ achievement, handleViewAchievement, handlePopupClose }) => {
     if (!achievement) return null;
 
     return (
@@ -8,7 +8,7 @@ const AchievementPopup = ({ achievement, handleViewReward, handlePopupClose }) =
             <div className="popup-content">
                 <h2>Achievement Unlocked!</h2>
                 <p>{achievement}</p>
-                <button onClick={handleViewReward}>View Reward</button>
+                <button onClick={handleViewAchievement}>View Achievement</button>
                 <button onClick={handlePopupClose}>Close</button>
             </div>
         </div>
