@@ -30,13 +30,7 @@ const Dashboard = () => {
             <header>
                 <h1>CashCraft</h1>
                 <h2>Take Charge of Your Finances</h2>
-                <button 
-        style={{ 
-            width: '100px',
-            height: '40px',
-            padding: '5px 10px', 
-            margin: '10px' 
-        }} onClick={handleLogout}>Logout</button> 
+           
             </header>
             <ThemeToggle />
 
