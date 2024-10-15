@@ -1,35 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useTheme } from './ThemeContext';
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'minecraft';
-  });
-
-  useEffect(() => {
-   
-    document.body.className = theme; 
-    localStorage.setItem('theme', theme);
-    
-
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-     
-      navbar.classList.remove('minecraft', 'barbie', 'halloween');
-    
-      navbar.classList.add(theme);
-    }
-  }, [theme]);
+  const { theme, toggleTheme } = useTheme();
 
   const handleChange = (event) => {
-    setTheme(event.target.value); 
+    const newTheme = event.target.value;
+    toggleTheme(newTheme);
   };
 
   return (
     <div className="theme-toggle-container">
-      <select 
-          className={`theme-select ${theme}`} 
-          value={theme} 
-          onChange={handleChange}
+      <select
+        className={`theme-select ${theme}`}
+        value={theme}
+        onChange={handleChange}
       >
         <option value="minecraft">Minecraft Theme</option>
         <option value="barbie">Barbie Theme</option>

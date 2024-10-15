@@ -3,50 +3,30 @@
     src: url('./fonts/MinecraftRegular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-}
-
-:root {
+  }
+  
+  :root {
     --font-family: 'MinecraftRegular';
     --background-color: #f9f9f9;
     --text-color: #333;
     --button-bg-color: #4caf50;
     --button-hover-color: #45a049;
     --modal-bg-color: white;
-}
-
-.barbie {
-    --font-family: 'Arial', sans-serif; 
-    --background-color: #FFC0CB;
-    --text-color: #C71585;
-    --button-bg-color: #FF69B4; 
-    --button-hover-color: #FF1493; 
-    --modal-bg-color: #FFF0F5;
-}
-
-.halloween {
-    --font-family: 'MinecraftRegular';
-    --background-color: #121212; /* Dark background for Halloween */
-    --text-color: #ff7518; /* Orange text */
-    --button-bg-color: #ff7518; /* Orange buttons */
-    --button-hover-color: #ff9800; /* Lighter orange for hover effect */
-    --modal-bg-color: #333; /* Dark modal background */
-}
-
-body {
+  }
+  
+  body {
     margin: 0;
     font-family: var(--font-family);
     box-sizing: border-box;
     background-color: var(--background-color);
     color: var(--text-color);
-}
-
-*,
-*::before,
-*::after {
+  }
+  
+  *, *::before, *::after {
     box-sizing: inherit;
-}
-
-button {
+  }
+  
+  button {
     background-color: var(--button-bg-color);
     color: white;
     border: none;
@@ -55,13 +35,13 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 10px;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: var(--button-hover-color);
-}
-
-.modal {
+  }
+  
+  .modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -71,34 +51,55 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.modal-content {
+  }
+  
+  .modal-content {
     background-color: var(--modal-bg-color);
     padding: 20px;
     border-radius: 8px;
     width: 300px;
-}
-
-.modal-input {
+  }
+  
+  .modal-input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-}
-
-.close {
+  }
+  
+  .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
+  }
+  
+  .close:hover, .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-image 0.3s ease;
+  }
+  
+  .navbar.minecraft {
+    background-image: url('./images/navbar-background.webp') !important;
+  }
+  
+  .navbar.barbie {
+    background-image: url('./images/barbie-background.jpg') !important;
+  }
+  
+  .navbar.halloween {
+    background-image: url('./images/halloween-background.webp') !important;
+  }
+  
