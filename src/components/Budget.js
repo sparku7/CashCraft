@@ -25,6 +25,7 @@ const BudgetManager = () => {
 
     const totalSpends = spends.reduce((total, spend) => total + spend.amount, 0);
 
+
     const clearIncome = () => {
         setIncome(0);
         setInputIncome('');
@@ -45,6 +46,7 @@ const BudgetManager = () => {
 
         return percentage > 100 ? 100 : percentage; // Cap at 100%
     };
+
 
     return (
         <>
@@ -78,7 +80,17 @@ const BudgetManager = () => {
                         value={spendDescription}
                         onChange={(e) => setSpendDescription(e.target.value)}
                         placeholder="Enter spend description"
+                    <input
+                        type="text"
+                        value={spendDescription}
+                        onChange={(e) => setSpendDescription(e.target.value)}
+                        placeholder="Enter spend description"
                     />
+                    <input
+                        type="number"
+                        value={spendAmount}
+                        onChange={(e) => setSpendAmount(e.target.value)}
+                        placeholder="Enter spend amount"
                     <input
                         type="number"
                         value={spendAmount}
