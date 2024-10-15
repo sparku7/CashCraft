@@ -36,7 +36,7 @@ const Navbar = () => {
         &#9776;
       </div>
       <ul className={isOpen ? 'active' : ''}>
-        <li><Link to="/" onClick={toggleMenu}>Dashboard</Link></li>
+        <li><Link to="/login" onClick={toggleMenu}>Dashboard</Link></li>
         <li><Link to="/budget" onClick={toggleMenu}>Budget</Link></li>
         <li><Link to="/goals" onClick={toggleMenu}>Goals</Link></li>
         <li><Link to="/quests" onClick={toggleMenu}>Quests</Link></li>

@@ -33,7 +33,8 @@ const App = () => {
               <Navbar />
               <ThemeToggle />
               <Routes>
-                <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+
                 <Route path="/register" element={<Register />} />
                 <Route
                   path="/dashboard"
