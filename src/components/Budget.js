@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../css/Budget.css';
+import { useTheme } from './ThemeContext'
 
 const BudgetManager = () => {
     const [income, setIncome] = useState(0);
@@ -124,6 +125,14 @@ const BudgetManager = () => {
                     <CircularProgressbar
                         value={getPercentage('needs')}
                         text={`${getPercentage('needs').toFixed(0)}%`}
+                        styles={{
+                            path: {
+                              stroke: `var(--progress-color)`, // Use dynamic color based on theme
+                            },
+                            text: {
+                              fill: `var(--progress-color)`, // Text color
+                            },
+                          }}
                     />
                     <h4>Total: ${calculateTotal('needs')}</h4>
                     <h4>Target: 50%</h4>
@@ -134,7 +143,16 @@ const BudgetManager = () => {
                     <CircularProgressbar
                         value={getPercentage('wants')}
                         text={`${getPercentage('wants').toFixed(0)}%`}
+                        styles={{
+                            path: {
+                              stroke: `var(--progress-color)`, // Use dynamic color based on theme
+                            },
+                            text: {
+                              fill: `var(--progress-color)`, // Text color
+                            },
+                          }}
                     />
+                    
                     <h4>Total: ${calculateTotal('wants')}</h4>
                     <h4>Target: 30%</h4>
                 </div>
@@ -144,6 +162,14 @@ const BudgetManager = () => {
                     <CircularProgressbar
                         value={getPercentage('savings')}
                         text={`${getPercentage('savings').toFixed(0)}%`}
+                        styles={{
+                            path: {
+                              stroke: `var(--progress-color)`, // Use dynamic color based on theme
+                            },
+                            text: {
+                              fill: `var(--progress-color)`, // Text color
+                            },
+                          }}
                     />
                     <h4>Total: ${calculateTotal('savings')}</h4>
                     <h4>Target: 20%</h4>

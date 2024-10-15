@@ -137,3 +137,15 @@ h1, h3, h4 {
   font-weight: bold;
 }
 
+
+.minecraft {
+  --progress-color: #4caf50;
+}
+
+.barbie {
+  --progress-color: #FF69B4;
+}
+
+.halloween {
+  --progress-color: #ff7518;
+}
