@@ -1,19 +1,27 @@
 .budget-manager {
   display: flex; /* Flexbox for income and spend sections */
-  padding: 70px;
+  padding: 20px;
 
-}
-
-.budget-title {
-  text-align: center; /* Center the title */
-  font-size: 2em; /* Adjust font size as needed */
-  margin-bottom: 0.5em; /* Space below the title */
 }
 
 .budget-description {
-  text-align: center; /* Center the description */
-  font-size: 1.2em; /* Adjust font size as needed */
-  margin-bottom: 1.5em; /* Space below the paragraph */
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 1.5em; 
+  padding: 0 20px; /* Adds horizontal padding */
+}
+
+
+.budget-title {
+    text-align: center; /* Center the title */
+    font-size: 2em; /* Adjust font size as needed */
+    margin-bottom: 0.5em; /* Space below the title */
+}
+
+.budget-description {
+    text-align: center; /* Center the description */
+    font-size: 1.2em; /* Adjust font size as needed */
+    margin-bottom: 1.5em; /* Space below the paragraph */
 }
 
 
@@ -93,7 +101,7 @@ button:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
 
-h3, h4 {
+h1, h3, h4 {
   text-align: center; /* Centers the text */
 }
 
