@@ -1,9 +1,20 @@
 .budget {
   padding: 20px;
   padding-top: 70px;
+  text-align: center;
 }
 
-.budget-summary, .categories, .add-expense {
+.category-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.budget-summary,
+.categories,
+.add-expense {
   background-color: #ffffff;
   padding: 15px;
   border-radius: 8px;
@@ -20,12 +31,24 @@
   margin-bottom: 10px;
 }
 
-.category-food { background-color: #ff6384; }
-.category-entertainment { background-color: #36a2eb; }
-.category-savings { background-color: #ffce56; }
-.category-other { background-color: #4bc0c0; }
+.category-food {
+  background-color: #ff6384;
+}
 
-.add-expense select, .add-expense input[type="number"] {
+.category-entertainment {
+  background-color: #36a2eb;
+}
+
+.category-savings {
+  background-color: #ffce56;
+}
+
+.category-other {
+  background-color: #4bc0c0;
+}
+
+.add-expense select,
+.add-expense input[type="number"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -35,7 +58,8 @@
   transition: border-color 0.3s;
 }
 
-.add-expense select:focus, .add-expense input[type="number"]:focus {
+.add-expense select:focus,
+.add-expense input[type="number"]:focus {
   border-color: #4caf50;
 }
 
@@ -44,9 +68,9 @@
 }
 
 .pie-chart-container {
-  width: 400px; 
-  height: 400px; 
-  margin: 0 auto; 
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,4 +79,52 @@
 .budget-chart {
   text-align: center;
   margin-top: 20px;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-category-button {
+  margin-top: 20px;
+  padding: 5px 10px;
+  font-size: 14px;
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style-type: none;
+}
+
+.category-item {
+  width: 200px; /* Fixed width */
+  height: 150px; /* Fixed height */
+  margin: 10px; /* Space between items */
+  box-sizing: border-box;
+  display: flex; /* Use flexbox for inner content */
+  flex-direction: column; /* Arrange content vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  padding-top:100px;
+  padding-bottom: 120px;
+}
+
+@media (max-width: 768px) {
+  .category-item {
+    width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .category-item {
+    width: calc(100% - 10px);
+  }
 }

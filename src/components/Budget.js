@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../css/Budget.css';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 import CategoryList from './CategoryList';
-import AddExpense from './AddExpense';
 import BudgetChart from './BudgetChart';
 import CategoryModal from './CategoryModal';
 
@@ -10,7 +9,6 @@ Chart.register(ArcElement, Tooltip, Legend);
 
 const Budget = () => {
     const [categories, setCategories] = useState([]);
-    const [newExpense, setNewExpense] = useState({ category: '', amount: '' });
     const [showModal, setShowModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [newCategory, setNewCategory] = useState({ name: '', budget: '' });
@@ -22,7 +20,8 @@ const Budget = () => {
             backgroundColor: [],
         }]
     });
-    const [isOverBudget, setIsOverBudget] = useState(() => (category) => category.spent > category.budget);
+    
+    const isOverBudget = (category) => category.spent > category.budget;
 
     const openEditModal = (index) => {
         setCurrentCategoryIndex(index);
@@ -33,7 +32,7 @@ const Budget = () => {
     const removeCategory = (index) => {
         const updatedCategories = categories.filter((_, i) => i !== index);
         setCategories(updatedCategories);
-        updateChartData(updatedCategories); 
+        updateChartData(updatedCategories);
     };
 
     const addExpense = (categoryName, amount) => {
@@ -47,9 +46,9 @@ const Budget = () => {
     const addCategory = (name, budget) => {
         const newCategories = [...categories, { name, budget: Number(budget), spent: 0 }];
         setCategories(newCategories);
-        setNewCategory({ name: '', budget: '' });
+        setNewCategory({ name: '', budget: '' }); 
         setShowModal(false);
-        updateChartData(newCategories); 
+        updateChartData(newCategories);
     };
 
     const updateCategory = () => {
@@ -57,7 +56,7 @@ const Budget = () => {
             i === currentCategoryIndex ? { ...cat, name: newCategory.name, budget: Number(newCategory.budget) } : cat
         );
         setCategories(updatedCategories);
-        updateChartData(updatedCategories); 
+        updateChartData(updatedCategories);
         setEditModal(false);
     };
 
@@ -93,22 +92,19 @@ const Budget = () => {
                 <h1>Your Budget Overview</h1>
                 <p>Keep track of your expenses and plan for the future!</p>
             </header>
-            <section className="overview">
-        
-            </section>
-            <CategoryList
-                categories={categories}
-                openEditModal={openEditModal}
-                removeCategory={removeCategory}
-                isOverBudget={isOverBudget}
-                setShowModal={setShowModal}
-            />
-            <AddExpense
-                categories={categories}
-                newExpense={newExpense}
-                setNewExpense={setNewExpense}
-                addExpense={addExpense}
-            />
+            
+            {/* Container for categories */}
+            <div className="category-container">
+                <CategoryList
+                    categories={categories}
+                    openEditModal={openEditModal}
+                    removeCategory={removeCategory}
+                    isOverBudget={isOverBudget}
+                    addExpense={addExpense}
+                    setShowModal={setShowModal}
+                />
+            </div>
+    
             <BudgetChart data={data} />
             <CategoryModal
                 isOpen={showModal}

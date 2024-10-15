@@ -9,7 +9,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Redirect if already logged in
+
     useEffect(() => {
         if (user) {
             navigate('/dashboard');
@@ -32,7 +32,7 @@ const Login = () => {
     return (
         <div>
             <form onSubmit={handleLogin}>
-                <h2>Login</h2>
+                <h2>Please Login</h2>
                 <input
                     type="text"
                     placeholder="Username"

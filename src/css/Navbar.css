@@ -65,21 +65,21 @@ a:hover {
 
 @media (max-width: 768px) {
   .hamburger {
-      display: block;
+      display: block; /* Show hamburger icon */
   }
 
   ul {
-      display: none;
+      display: none; /* Hidden by default */
       flex-direction: column;
       position: absolute;
-      top: 60px;
+      top: 60px; /* Adjust based on your navbar height */
       left: 0;
       width: 100%;
       padding: 10px 0;
   }
 
   ul.active {
-      display: flex;
+      display: flex; /* Show when active */
   }
 
   li {

@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
 import '../css/Navbar.css';
 
 const Navbar = () => {
   const { theme } = useTheme();
-  console.log("Current theme in Navbar:", theme);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prevState => !prevState);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+
+      setIsOpen(false);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <nav className={`navbar ${theme}`}>
