@@ -1,130 +1,99 @@
-.budget {
-  padding: 20px;
-  padding-top: 70px;
-  text-align: center;
+.budget-manager {
+  display: flex; /* Flexbox for income and spend sections */
+  padding: 70px;
+
 }
 
-.category-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 800px;
-  margin: 0 auto;
+.budget-title {
+  text-align: center; /* Center the title */
+  font-size: 2em; /* Adjust font size as needed */
+  margin-bottom: 0.5em; /* Space below the title */
 }
 
-.budget-summary,
-.categories,
-.add-expense {
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+.budget-description {
+  text-align: center; /* Center the description */
+  font-size: 1.2em; /* Adjust font size as needed */
+  margin-bottom: 1.5em; /* Space below the paragraph */
 }
 
-.categories ul {
-  list-style-type: none;
-  padding: 0;
+
+.income-section, .spend-section {
+  flex: 1; /* Equal growth for both sections */
+  margin-right: 20px; /* Space between sections */
+  border: 2px solid #007bff; /* Blue border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 15px; /* Padding inside the boxes */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #f9f9f9; /* Light background */
 }
 
-.categories li {
-  margin-bottom: 10px;
+.spend-section {
+  margin-right: 0; /* Remove margin on the last section */
 }
 
-.category-food {
-  background-color: #ff6384;
+/* Add this to your Budget.css file */
+
+.spend-section select {
+  font-family: var(--font-family);
+  width: 100%; /* Full width */
+  padding: 10px; /* Add padding for better touch targets */
+  border: 1px solid #ccc; /* Change border color */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Adjust font size */
+  background-color: #f9f9f9; /* Background color */
+  cursor: pointer; /* Pointer cursor on hover */
 }
 
-.category-entertainment {
-  background-color: #36a2eb;
+/* Optional: Style the dropdown on hover and focus */
+.spend-section select:hover,
+.spend-section select:focus {
+  border-color: #007bff; /* Change border color on hover/focus */
+  background-color: #fff; /* Change background color on hover/focus */
 }
 
-.category-savings {
-  background-color: #ffce56;
+
+.tables-section {
+  display: flex; /* Keep tables in a flex row */
+  justify-content: space-around; /* Space out tables evenly */
+  margin-top: 20px; /* Adds space above the tables */
 }
 
-.category-other {
-  background-color: #4bc0c0;
-}
-
-.add-expense select,
-.add-expense input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+.table-container {
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s;
+  padding: 10px;
+  width: 30%; /* Adjust width as necessary */
 }
 
-.add-expense select:focus,
-.add-expense input[type="number"]:focus {
-  border-color: #4caf50;
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures that borders are collapsed */
+  border: 2px solid black; /* Black border for the table */
 }
 
-.add-expense button {
-  font-size: 16px;
+table td {
+  border: 1px solid black; /* Black border for table cells */
+  padding: 8px; /* Padding inside cells */
 }
 
-.pie-chart-container {
-  width: 400px;
-  height: 400px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+h1, h2, h3, h4 {
+  color: #333; /* Dark text color for headings */
 }
 
-.budget-chart {
-  text-align: center;
-  margin-top: 20px;
+button {
+  background-color: #007bff; /* Blue button background */
+  color: white; /* White text on button */
+  border: none;
+  border-radius: 5px; /* Rounded button corners */
+  padding: 10px 15px; /* Button padding */
+  cursor: pointer;
 }
 
-.category-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
-.add-category-button {
-  margin-top: 20px;
-  padding: 5px 10px;
-  font-size: 14px;
-  width: 100px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+h3, h4 {
+  text-align: center; /* Centers the text */
 }
 
-ul {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  list-style-type: none;
-}
-
-.category-item {
-  width: 200px;
-  height: 150px;
-  margin: 10px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 100px;
-  padding-bottom: 120px;
-}
-
-@media (max-width: 768px) {
-  .category-item {
-    width: calc(50% - 10px);
-  }
-}
-
-@media (max-width: 480px) {
-  .category-item {
-    width: calc(100% - 10px);
-  }
-}
