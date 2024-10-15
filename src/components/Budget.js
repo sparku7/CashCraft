@@ -11,13 +11,28 @@ const BudgetManager = () => {
     const [spendCategory, setSpendCategory] = useState('needs');
     const [spendDescription, setSpendDescription] = useState('');
 
+
     const addSpend = () => {
         if (spendAmount) {
-            setSpends([...spends, { description: spendDescription, amount: Number(spendAmount), category: spendCategory }]);
+            const newSpend = {
+                id: Math.random().toString(36).substr(2, 9), // Generate a unique ID
+                description: spendDescription,
+                amount: Number(spendAmount),
+                category: spendCategory
+            };
+            setSpends([...spends, newSpend]);
             setSpendAmount('');
             setSpendDescription('');
         }
     };
+
+
+    const removeSpend = (id) => {
+        const newSpends = spends.filter(spend => spend.id !== id);
+        setSpends(newSpends);
+    };
+
+
 
     const calculateTotal = (category) => {
         return spends
@@ -27,19 +42,24 @@ const BudgetManager = () => {
 
     const totalSpends = spends.reduce((total, spend) => total + spend.amount, 0);
 
+    const totalIncomeAfterSpends = income - totalSpends;
+
+
     const clearIncome = () => {
         setIncome(0);
         setInputIncome('');
     };
+
 
     const handleAddIncome = () => {
         setIncome(income + Number(inputIncome));
         setInputIncome('');
     };
 
-    const getPercentage = (category, target) => {
+
+    const getPercentage = (category) => {
         const total = calculateTotal(category);
-        return Math.min((total / (totalSpends || 1)) * 100, target); // Cap at target percentage
+        return (total / (totalSpends || 1)) * 100;
     };
 
     return (
@@ -54,6 +74,7 @@ const BudgetManager = () => {
             </p>
 
             <div className="budget-manager">
+
                 <div className="income-section">
                     <h2>Enter Income</h2>
                     <input
@@ -64,6 +85,8 @@ const BudgetManager = () => {
                     />
                     <div style={{ textAlign: 'center' }}>
                         <h3>Total Income: ${income}</h3>
+                        <h3>Total Income After Spends: ${totalIncomeAfterSpends}</h3> {/* New addition */}
+
                         <button onClick={handleAddIncome}>Add</button>
                         <button onClick={clearIncome}>Clear</button>
                     </div>
@@ -89,30 +112,140 @@ const BudgetManager = () => {
                         <option value="savings">Savings</option>
                     </select>
                     <br />
-                    <button onClick={addSpend}>Add Spends</button>
+                    <br></br>
+                    <button onClick={addSpend}>Add Spend</button>
                 </div>
             </div>
 
-            <div className="tables-section">
-                <div className="table-container">
+
+            <div className="progress-section">
+                <div className="progress-container">
                     <h3>Needs</h3>
-                    <CircularProgressbar value={getPercentage('needs', 50)} text={`${getPercentage('needs', 50).toFixed(0)}%`} />
+                    <CircularProgressbar
+                        value={getPercentage('needs')}
+                        text={`${getPercentage('needs').toFixed(0)}%`}
+                    />
                     <h4>Total: ${calculateTotal('needs')}</h4>
                     <h4>Target: 50%</h4>
                 </div>
 
-                <div className="table-container">
+                <div className="progress-container">
                     <h3>Wants</h3>
-                    <CircularProgressbar value={getPercentage('wants', 30)} text={`${getPercentage('wants', 30).toFixed(0)}%`} />
+                    <CircularProgressbar
+                        value={getPercentage('wants')}
+                        text={`${getPercentage('wants').toFixed(0)}%`}
+                    />
                     <h4>Total: ${calculateTotal('wants')}</h4>
                     <h4>Target: 30%</h4>
                 </div>
 
-                <div className="table-container">
+                <div className="progress-container">
                     <h3>Savings</h3>
-                    <CircularProgressbar value={getPercentage('savings', 20)} text={`${getPercentage('savings', 20).toFixed(0)}%`} />
+                    <CircularProgressbar
+                        value={getPercentage('savings')}
+                        text={`${getPercentage('savings').toFixed(0)}%`}
+                    />
                     <h4>Total: ${calculateTotal('savings')}</h4>
                     <h4>Target: 20%</h4>
+                </div>
+            </div>
+
+            {/* Tables Section */}
+            <div className="tables-section">
+                <div className="table-container">
+                    <h3>Needs</h3>
+                    <table className="budget-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {spends.filter(spend => spend.category === 'needs').map(spend => (
+                                <tr key={spend.id}>
+                                    <td>{spend.description}</td>
+                                    <td>${spend.amount}</td>
+                                    <td>
+                                        <button onClick={() => removeSpend(spend.id)}>Remove</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total:</strong></td>
+                                <td><strong>${calculateTotal('needs')}</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div className="table-container">
+                    <h3>Wants</h3>
+                    <table className="budget-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {spends.filter(spend => spend.category === 'wants').map(spend => (
+                                <tr key={spend.id}>
+                                    <td>{spend.description}</td>
+                                    <td>${spend.amount}</td>
+                                    <td>
+                                        <button onClick={() => removeSpend(spend.id)}>Remove</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total:</strong></td>
+                                <td><strong>${calculateTotal('wants')}</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div className="table-container">
+                    <h3>Savings</h3>
+                    <table className="budget-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {spends.filter(spend => spend.category === 'savings').map(spend => (
+                                <tr key={spend.id}>
+                                    <td>{spend.description}</td>
+                                    <td>${spend.amount}</td>
+                                    <td>
+                                        <button onClick={() => removeSpend(spend.id)}>Remove</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total:</strong></td>
+                                <td><strong>${calculateTotal('savings')}</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </>

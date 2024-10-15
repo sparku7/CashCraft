@@ -60,12 +60,6 @@
 }
 
 
-.tables-section {
-  display: flex; /* Keep tables in a flex row */
-  justify-content: space-around; /* Space out tables evenly */
-  margin-top: 20px; /* Adds space above the tables */
-}
-
 .table-container {
   border: 1px solid #ccc;
   padding: 10px;
@@ -103,5 +97,43 @@ button:hover {
 
 h1, h3, h4 {
   text-align: center; /* Centers the text */
+}
+
+.progress-section {
+  display: flex;
+  justify-content: space-around; /* Distributes circles evenly */
+  align-items: center; /* Vertically centers the circles */
+  margin-bottom: 30px;
+}
+
+.progress-container {
+  width: 150px; /* Adjust the size here */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.tables-section {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 30px;
+}
+
+
+
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.budget-table th, .budget-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.budget-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
