@@ -9,28 +9,71 @@ import AchievementsPage from './components/AchievementsPage';
 import { GoalsProvider } from './components/GoalsContext';
 import { SavingsProvider } from './components/SavingsContext';
 import { ThemeProvider } from './components/ThemeContext';
+import { AuthProvider } from './components/Auth/AuthContext';
 import './app.css';
 import ThemeToggle from './components/ThemeToggle';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import ProtectedRoute from './components/Auth/ProtectedRoute';
 
 const App = () => {
   return (
-    <SavingsProvider>
-      <GoalsProvider>
-        <ThemeProvider>
-          <Router>
-            <Navbar />
-            <ThemeToggle />
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/budget" element={<Budget />} />
-              <Route path="/goals" element={<Goals />} />
-              <Route path="/quests" element={<Quest />} />
-              <Route path="/achievements" element={<AchievementsPage />} />
-            </Routes>
-          </Router>
-        </ThemeProvider>
-      </GoalsProvider>
-    </SavingsProvider>
+    <AuthProvider>
+      <SavingsProvider>
+        <GoalsProvider>
+          <ThemeProvider>
+            <Router>
+              <Navbar />
+              <ThemeToggle />
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/budget"
+                  element={
+                    <ProtectedRoute>
+                      <Budget />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/goals"
+                  element={
+                    <ProtectedRoute>
+                      <Goals />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/quests"
+                  element={
+                    <ProtectedRoute>
+                      <Quest />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/achievements"
+                  element={
+                    <ProtectedRoute>
+                      <AchievementsPage />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </Router>
+          </ThemeProvider>
+        </GoalsProvider>
+      </SavingsProvider>
+    </AuthProvider>
   );
 };
 
