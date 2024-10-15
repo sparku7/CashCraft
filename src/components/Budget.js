@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import '../css/Budget.css';
 
 const BudgetManager = () => {
@@ -25,7 +27,6 @@ const BudgetManager = () => {
 
     const totalSpends = spends.reduce((total, spend) => total + spend.amount, 0);
 
-
     const clearIncome = () => {
         setIncome(0);
         setInputIncome('');
@@ -36,17 +37,10 @@ const BudgetManager = () => {
         setInputIncome('');
     };
 
-    const getPercentage = (category) => {
-        const targetPercentage = category === 'needs' ? 0.5 : category === 'wants' ? 0.3 : 0.2; // 50%, 30%, 20%
-        const totalCategoryExpenditure = calculateTotal(category);
-        const effectiveIncome = income * targetPercentage;
-
-        if (effectiveIncome === 0) return 0; // Avoid division by zero
-        const percentage = (totalCategoryExpenditure / effectiveIncome) * 100;
-
-        return percentage > 100 ? 100 : percentage; // Cap at 100%
+    const getPercentage = (category, target) => {
+        const total = calculateTotal(category);
+        return Math.min((total / (totalSpends || 1)) * 100, target); // Cap at target percentage
     };
-
 
     return (
         <>
@@ -58,6 +52,7 @@ const BudgetManager = () => {
                 This framework helps you allocate your resources effectively for
                 a balanced financial life.
             </p>
+
             <div className="budget-manager">
                 <div className="income-section">
                     <h2>Enter Income</h2>
@@ -73,6 +68,7 @@ const BudgetManager = () => {
                         <button onClick={clearIncome}>Clear</button>
                     </div>
                 </div>
+
                 <div className="spend-section">
                     <h2>Spends</h2>
                     <input
@@ -80,17 +76,7 @@ const BudgetManager = () => {
                         value={spendDescription}
                         onChange={(e) => setSpendDescription(e.target.value)}
                         placeholder="Enter spend description"
-                    <input
-                        type="text"
-                        value={spendDescription}
-                        onChange={(e) => setSpendDescription(e.target.value)}
-                        placeholder="Enter spend description"
                     />
-                    <input
-                        type="number"
-                        value={spendAmount}
-                        onChange={(e) => setSpendAmount(e.target.value)}
-                        placeholder="Enter spend amount"
                     <input
                         type="number"
                         value={spendAmount}
@@ -103,39 +89,31 @@ const BudgetManager = () => {
                         <option value="savings">Savings</option>
                     </select>
                     <br />
-                    <br />
                     <button onClick={addSpend}>Add Spends</button>
                 </div>
             </div>
+
             <div className="tables-section">
-                {['needs', 'wants', 'savings'].map(category => (
-                    <div className="table-container" key={category}>
-                        <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
-                        <table>
-                            <tbody>
-                                {spends.filter(spend => spend.category === category).map((spend, index) => (
-                                    <tr key={index}>
-                                        <td>{spend.description}</td>
-                                        <td>${spend.amount}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <h4>Total: ${calculateTotal(category)}</h4>
-                        <h4>Percentage of Target Expenditure: {getPercentage(category).toFixed(2)}%</h4>
-                        <h1>Target: {category === 'needs' ? '50%' : category === 'wants' ? '30%' : '20%'}</h1>
-                        <div style={{ width: '100%', backgroundColor: '#e0e0e0', borderRadius: '5px' }}>
-                            <div
-                                style={{
-                                    height: '20px',
-                                    width: `${getPercentage(category).toFixed(2)}%`,
-                                    backgroundColor: category === 'needs' ? '#4caf50' : category === 'wants' ? '#2196f3' : '#ff9800',
-                                    borderRadius: '5px'
-                                }}
-                            />
-                        </div>
-                    </div>
-                ))}
+                <div className="table-container">
+                    <h3>Needs</h3>
+                    <CircularProgressbar value={getPercentage('needs', 50)} text={`${getPercentage('needs', 50).toFixed(0)}%`} />
+                    <h4>Total: ${calculateTotal('needs')}</h4>
+                    <h4>Target: 50%</h4>
+                </div>
+
+                <div className="table-container">
+                    <h3>Wants</h3>
+                    <CircularProgressbar value={getPercentage('wants', 30)} text={`${getPercentage('wants', 30).toFixed(0)}%`} />
+                    <h4>Total: ${calculateTotal('wants')}</h4>
+                    <h4>Target: 30%</h4>
+                </div>
+
+                <div className="table-container">
+                    <h3>Savings</h3>
+                    <CircularProgressbar value={getPercentage('savings', 20)} text={`${getPercentage('savings', 20).toFixed(0)}%`} />
+                    <h4>Total: ${calculateTotal('savings')}</h4>
+                    <h4>Target: 20%</h4>
+                </div>
             </div>
         </>
     );
