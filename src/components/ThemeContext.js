@@ -38,7 +38,7 @@ const themes = {
     '--modal-bg-color': 'white',
   },
   barbie: {
-    '--font-family': "'Arial', sans-serif",
+    '--font-family': "'Barbie'",
     '--background-color': '#FFC0CB',
     '--text-color': '#C71585',
     '--button-bg-color': '#FF69B4',
@@ -46,7 +46,7 @@ const themes = {
     '--modal-bg-color': '#FFF0F5',
   },
   halloween: {
-    '--font-family': "'MinecraftRegular'",
+    '--font-family': "'Halloween'",
     '--background-color': '#121212',
     '--text-color': '#ff7518',
     '--button-bg-color': '#ff7518',

@@ -5,12 +5,12 @@
 }
 
 .theme-toggle-container {
-  margin: 20px auto; 
-  display: inline-block; 
+  margin: 20px auto;
+  display: inline-block;
 }
 
 header {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .overview {
@@ -49,30 +49,17 @@ header {
   text-align: left;
 }
 
-/* Default Minecraft Theme for Headers */
 .recent-transactions th {
-  background-color: #4caf50; /* Minecraft header color */
-  color: white; /* White text for header */
+  background-color: var(--button-bg-color); 
+  color: white;
 }
 
 .recent-transactions tr:nth-child(even) {
-  background-color: #f9f9f9; /* Light gray for even rows */
+  background-color: #f9f9f9;
 }
 
 .recent-transactions tr:hover {
-  background-color: #f1f1f1; /* Light hover effect */
-}
-
-/* Barbie Theme Styles */
-.recent-transactions.barbie th {
-  background-color: #FF69B4; /* Darker pink for Barbie theme headers */
-  color: white; /* White text for header */
-}
-
-/* Halloween Theme Styles */
-.recent-transactions.halloween th {
-  background-color: #800080; /* Purple for Halloween theme headers */
-  color: white; /* White text for header */
+  background-color: #f1f1f1;
 }
 
 .theme-select {
@@ -83,22 +70,6 @@ header {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.theme-select.minecraft {
-  background-color: #e0e0e0; /* Light gray for Minecraft */
-  color: #333;
-}
-
-.theme-select.barbie {
-  background-color: #FFC0CB; /* Barbie pink */
-  color: #C71585; /* Barbie text color */
-}
-
-.theme-select.dark {
-  background-color: #333; /* Dark background for dark mode */
-  color: #fff; /* Light text color */
-}
-
-/* Option styling */
 .theme-select option {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -106,6 +77,6 @@ header {
 
 @media (max-width: 768px) {
   .recent-transactions {
-      width: 100%;
+    width: 100%;
   }
 }
