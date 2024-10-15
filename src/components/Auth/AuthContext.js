@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -9,18 +9,30 @@ export const AuthProvider = ({ children }) => {
         { username: 'admin', password: 'adminpass' },
     ]);
 
+    useEffect(() => {
+    
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            setUser(JSON.parse(savedUser));
+        }
+    }, []);
+
     const login = (username, password) => {
         const foundUser = users.find(
             (u) => u.username === username && u.password === password
         );
         if (foundUser) {
             setUser(foundUser);
+            localStorage.setItem('user', JSON.stringify(foundUser));
             return true;
         }
         return false;
     };
 
-    const logout = () => setUser(null);
+    const logout = () => {
+        setUser(null);
+        localStorage.removeItem('user'); 
+    };
 
     const register = (username, password) => {
         const existingUser = users.find((u) => u.username === username);

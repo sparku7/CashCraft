@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../Auth/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
-    const { login } = useAuth();
+    const { login, user } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); 
+    const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    // Redirect if already logged in
+    useEffect(() => {
+        if (user) {
+            navigate('/dashboard');
+        }
+    }, [user, navigate]);
 
     const handleLogin = (e) => {
         e.preventDefault();
         if (login(username, password)) { 
             navigate('/dashboard'); 
         } else {
-            setError('Invalid username or password.'); 
+            setError('Invalid username or password.');
         }
     };
 
     const closeErrorModal = () => {
-        setError(''); 
+        setError('');
     };
 
     return (
@@ -47,7 +54,6 @@ const Login = () => {
                 Don't have an account? <Link to="/register">Register here</Link>
             </p>
 
-           
             {error && (
                 <div className="modal">
                     <div className="modal-content">
