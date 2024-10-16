@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
-import { useAuth } from '../Auth/AuthContext'; 
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const { register } = useAuth(); 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(''); 
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
-    const handleRegister = (e) => {
+    const register = async (username, password) => {
+        try {
+            const response = await fetch('http://localhost:1010/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: username,
+                    password: password,
+                }),
+            });
+
+            if (response.ok) {
+                return true;
+            } else {
+                const errorData = await response.json();
+                setError(errorData.message || 'Registration failed!');
+                return false; 
+            }
+        } catch (err) {
+            setError('An error occurred while registering!');
+            return false;
+        }
+    };
+
+    const handleRegister = async (e) => {
         e.preventDefault();
-        const success = register(username, password); 
-        if (success) {
+        const isSuccess = await register(username, password); 
+        if (isSuccess) {
             setSuccess(true);
         } else {
             setError("Username already exists!"); 
@@ -50,7 +74,6 @@ const Register = () => {
                 <button type="submit">Register</button>
             </form>
 
-         
             {error && (
                 <div className="modal">
                     <div className="modal-content">
@@ -60,7 +83,6 @@ const Register = () => {
                 </div>
             )}
 
-         
             {success && (
                 <div className="modal">
                     <div className="modal-content">

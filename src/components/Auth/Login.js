@@ -9,17 +9,17 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-
     useEffect(() => {
         if (user) {
             navigate('/dashboard');
         }
     }, [user, navigate]);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (login(username, password)) { 
-            navigate('/dashboard'); 
+        const success = await login(username, password);
+        if (success) {
+            navigate('/dashboard');
         } else {
             setError('Invalid username or password.');
         }
