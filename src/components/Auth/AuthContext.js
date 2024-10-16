@@ -4,6 +4,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); 
     const [users, setUsers] = useState([ 
         { username: 'testuser', password: 'password123' },
         { username: 'admin', password: 'adminpass' },
@@ -44,8 +45,16 @@ export const AuthProvider = ({ children }) => {
         return false; 
     };
 
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            setUser(JSON.parse(savedUser));
+        }
+        setIsLoading(false); 
+    }, []);
+    
     return (
-        <AuthContext.Provider value={{ user, login, logout, register }}>
+        <AuthContext.Provider value={{ user, login, logout, isLoading, register }}>
             {children}
         </AuthContext.Provider>
     );

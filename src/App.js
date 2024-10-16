@@ -33,7 +33,7 @@ const App = () => {
               <Navbar />
               <ThemeToggle />
               <Routes>
-              <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login />} />
 
                 <Route path="/register" element={<Register />} />
                 <Route
@@ -75,7 +75,9 @@ const App = () => {
                       <AchievementsPage />
                     </ProtectedRoute>
                   }
+                  
                 />
+              <Route path="*" element={<h1>404 - Page Not Found</h1>} />
               </Routes>
             </Router>
           </ThemeProvider>
