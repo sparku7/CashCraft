@@ -1,0 +1,15 @@
+.minecraft-block {
+    position: fixed; /* Fixes the position of the block */
+    top: 0; /* Start from the top */
+    width: 50px; /* Width of the block */
+    height: 50px; /* Height of the block */
+    background: url('../images/Piggy_Bank.webp') no-repeat center center; /* Ensure you have a Minecraft block image */
+    background-size: contain; /* Adjust the image size */
+    pointer-events: none; /* Ignore mouse events */
+    animation-name: block-fall; /* Use the defined animation */
+}
+
+@keyframes block-fall {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); } /* Fall to the bottom of the viewport */
+}

@@ -4,7 +4,7 @@ const QuestCard = ({ quest, onComplete, onDelete }) => {
   return (
     <div className={`quest-card ${quest.completed ? 'completed' : ''}`}>
       <span>{quest.name}</span>
-      <button onClick={() => onComplete(quest.id)}>
+      <button className='quest-button' onClick={() => onComplete(quest.id)}>
         {quest.completed ? 'Undo' : 'Complete'}
       </button>
       {!quest.completed && (

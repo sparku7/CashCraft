@@ -1,4 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import Snowfall from './Snowfall';
+import BlockAnimation from './BlockAnimation';
+import HeartAnimation from './HeartAnimation';
+import PumpkinAnimation from './PumpkinAnimation';
 
 const ThemeContext = createContext();
 
@@ -21,6 +25,10 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <Snowfall active={theme === 'christmas'} />
+            <BlockAnimation active={theme === 'minecraft'} />
+            <HeartAnimation active={theme === 'barbie'} />
+            <PumpkinAnimation active={theme === 'halloween'} />
       {children}
     </ThemeContext.Provider>
   );

@@ -168,3 +168,23 @@ p {
 }
 
 
+@keyframes snow {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+.snowflake {
+    position: fixed;
+    top: -10px; /* Start above the viewport */
+    width: 10px; /* Size of the snowflake */
+    height: 10px; /* Size of the snowflake */
+    background-color: white; /* Color of the snowflake */
+    border-radius: 50%; /* Make it round */
+    opacity: 0.8; /* Slight transparency */
+    pointer-events: none; /* Ignore mouse events */
+    animation: snow linear forwards; /* Apply the snowfall animation */
+}
