@@ -24,6 +24,7 @@ import './css/Quests.css';
 import './app.css';
 
 import { Navigate } from 'react-router-dom'; 
+import FinanceEducation from './components/FinanceEducation'; // Import the new component
 
 const App = () => {
   return (
@@ -35,7 +36,7 @@ const App = () => {
               <Navbar />
               <ThemeToggle />
               <Routes>
-                <Route path="/" element={<Navigate to="/login" />} /> 
+                <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route
@@ -78,6 +79,10 @@ const App = () => {
                     </ProtectedRoute>
                   }
                 />
+                <Route 
+                  path="/finance-education" 
+                  element={<FinanceEducation />} 
+                /> {/* New route */}
                 <Route path="*" element={<h1>404 - Page Not Found</h1>} />
               </Routes>
             </Router>
@@ -87,5 +92,7 @@ const App = () => {
     </AuthProvider>
   );
 };
+
+
 
 export default App;

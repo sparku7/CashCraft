@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
-import { useAuth } from '../components/Auth/AuthContext'; // Import useAuth
+import { useAuth } from '../components/Auth/AuthContext'; 
 import '../css/Navbar.css';
 
 const Navbar = () => {
   const { theme } = useTheme();
-  const { logout } = useAuth(); // Get logout function
+  const { logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout(); 
-    // Optionally redirect after logout
+ 
   };
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const Navbar = () => {
         <li><Link to="/goals" onClick={toggleMenu}>Goals</Link></li>
         <li><Link to="/quests" onClick={toggleMenu}>Quests</Link></li>
         <li><Link to="/achievements" onClick={toggleMenu}>Achievements</Link></li>
+        <li><Link to="/finance-education" onClick={toggleMenu}>Finance Fun Zone!</Link></li> 
         <li>
         <li>
   <button onClick={handleLogout} className="logout-button">Logout</button>
