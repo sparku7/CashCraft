@@ -5,13 +5,13 @@ import Balance from './Balance';
 import RecentTransactions from './RecentTransactions';
 import Goal from './Goal';
 import ThemeToggle from './ThemeToggle';
-import { useAuth } from '../components/Auth/AuthContext'; // Import useAuth
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useAuth } from '../components/Auth/AuthContext'; 
+import { useNavigate } from 'react-router-dom'; 
 
 const Dashboard = () => {
     const { goals } = useGoals();
-    const { logout } = useAuth(); // Get logout function
-    const navigate = useNavigate(); // Use navigate for navigation
+    const { logout } = useAuth(); 
+    const navigate = useNavigate(); 
 
     const transactions = [
         { date: '2024-10-01', description: 'Paycheck', amount: '+£500.00' },

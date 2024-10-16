@@ -19,6 +19,12 @@
     font-style: normal;
   }
   
+  @font-face {
+    font-family: 'Christmas';
+    src: url('./fonts/Christmas.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
   :root {
     --font-family: 'MinecraftRegular';
     --background-color: #f9f9f9;
@@ -36,7 +42,7 @@
     color: var(--text-color);
   }
 
-  h4, p {
+  h1, h2, h3, h4, p {
     color: var(--text-color);
   }
   

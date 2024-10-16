@@ -36,7 +36,7 @@ const themes = {
       '--button-bg-color': '#4caf50',
       '--button-hover-color': '#45a049',
       '--modal-bg-color': 'white',
-      '--progress-color': '#00ff00', // Add progress bar color
+      '--progress-color': '#00ff00', 
     },
     barbie: {
       '--font-family': "'Barbie'",
@@ -45,7 +45,7 @@ const themes = {
       '--button-bg-color': '#FF69B4',
       '--button-hover-color': '#FF1493',
       '--modal-bg-color': '#FFF0F5',
-      '--progress-color': '#ff69b4', // Add progress bar color
+      '--progress-color': '#ff69b4',
     },
     halloween: {
       '--font-family': "'Halloween'",
@@ -54,7 +54,16 @@ const themes = {
       '--button-bg-color': '#ff7518',
       '--button-hover-color': '#ff9800',
       '--modal-bg-color': '#333',
-      '--progress-color': '#ff7518', // Add progress bar color
-    }
+      '--progress-color': '#ff7518',
+    },
+    christmas: {
+        '--font-family': "'Christmas'",
+        '--background-color': '#e0e0e0',
+        '--text-color': '#a40000',
+        '--button-bg-color': '#d32f2f',
+        '--button-hover-color': '#ffcc00',
+        '--modal-bg-color': '#f5f5dc',
+        '--progress-color': '#3caf60',
+      }
   };
   

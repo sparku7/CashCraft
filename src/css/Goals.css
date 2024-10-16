@@ -1,6 +1,6 @@
 .goals {
   padding: 20px;
-  background-color: #f5f5dc;
+  background-color: #ffffff;
 }
 
 .goal-list {
@@ -8,6 +8,7 @@
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
+  border: 2px solid var(--button-bg-color);   border-radius: 8px; 
 }
 
 .goal-list ul {
@@ -22,8 +23,9 @@
 .add-savings {
   padding: 15px;
   background-color: #ffffff;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--button-bg-color);   border-radius: 8px; 
 }
 
 .add-savings select, .add-savings input {

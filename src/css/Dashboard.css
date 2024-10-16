@@ -24,6 +24,7 @@ header {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--button-bg-color); 
 }
 
 .balance {
@@ -66,7 +67,7 @@ header {
   font-family: var(--font-family);
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid var(--button-bg-color);   border-radius: 8px;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -74,6 +75,12 @@ header {
   background-color: var(--background-color);
   color: var(--text-color);
 }
+
+.goals {  background-color: #1f0202;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--button-bg-color);  }
 
 @media (max-width: 768px) {
   .recent-transactions {

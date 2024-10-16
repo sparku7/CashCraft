@@ -16,7 +16,7 @@ const BudgetManager = () => {
     const addSpend = () => {
         if (spendAmount) {
             const newSpend = {
-                id: Math.random().toString(36).substr(2, 9), // Generate a unique ID
+                id: Math.random().toString(36).substr(2, 9), 
                 description: spendDescription,
                 amount: Number(spendAmount),
                 category: spendCategory
@@ -86,7 +86,7 @@ const BudgetManager = () => {
                     />
                     <div style={{ textAlign: 'center' }}>
                         <h3>Total Income: ${income}</h3>
-                        <h3>Total Income After Spends: ${totalIncomeAfterSpends}</h3> {/* New addition */}
+                        <h3>Total Income After Spends: ${totalIncomeAfterSpends}</h3>
 
                         <button onClick={handleAddIncome}>Add</button>
                         <button onClick={clearIncome}>Clear</button>
@@ -127,10 +127,10 @@ const BudgetManager = () => {
                         text={`${getPercentage('needs').toFixed(0)}%`}
                         styles={{
                             path: {
-                              stroke: `var(--progress-color)`, // Use dynamic color based on theme
+                              stroke: `var(--progress-color)`, 
                             },
                             text: {
-                              fill: `var(--progress-color)`, // Text color
+                              fill: `var(--progress-color)`,
                             },
                           }}
                     />
@@ -145,10 +145,10 @@ const BudgetManager = () => {
                         text={`${getPercentage('wants').toFixed(0)}%`}
                         styles={{
                             path: {
-                              stroke: `var(--progress-color)`, // Use dynamic color based on theme
+                              stroke: `var(--progress-color)`,
                             },
                             text: {
-                              fill: `var(--progress-color)`, // Text color
+                              fill: `var(--progress-color)`, 
                             },
                           }}
                     />
@@ -164,10 +164,10 @@ const BudgetManager = () => {
                         text={`${getPercentage('savings').toFixed(0)}%`}
                         styles={{
                             path: {
-                              stroke: `var(--progress-color)`, // Use dynamic color based on theme
+                              stroke: `var(--progress-color)`, 
                             },
                             text: {
-                              fill: `var(--progress-color)`, // Text color
+                              fill: `var(--progress-color)`,
                             },
                           }}
                     />
@@ -176,7 +176,7 @@ const BudgetManager = () => {
                 </div>
             </div>
 
-            {/* Tables Section */}
+   
             <div className="tables-section">
                 <div className="table-container">
                     <h3>Needs</h3>

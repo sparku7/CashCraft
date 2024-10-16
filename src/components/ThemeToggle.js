@@ -16,9 +16,10 @@ const ThemeToggle = () => {
         value={theme}
         onChange={handleChange}
       >
-        <option value="minecraft">Minecraft Theme</option>
-        <option value="barbie">Barbie Theme</option>
-        <option value="halloween">Halloween Mode</option>
+        <option value="minecraft">Minecraft</option>
+        <option value="barbie">Barbie</option>
+        <option value="halloween">Halloween</option>
+        <option value="christmas">Christmas</option>
       </select>
     </div>
   );

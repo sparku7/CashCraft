@@ -43,6 +43,10 @@ ul.active .logout-button {
   background-image: url('../images/halloween-background.webp');
 }
 
+.navbar.christmas {
+  background-image: url('../images/christmas-background.jpg');
+}
+
 .logo {
   font-size: 40px;
   color: black;
