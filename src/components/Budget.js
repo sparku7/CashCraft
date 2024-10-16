@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../css/Budget.css';
-import { useTheme } from './ThemeContext'
-
+import BudgetModal from './BudgetModal'; 
 const BudgetManager = () => {
     const [income, setIncome] = useState(0);
     const [inputIncome, setInputIncome] = useState('');
@@ -11,29 +10,39 @@ const BudgetManager = () => {
     const [spendAmount, setSpendAmount] = useState('');
     const [spendCategory, setSpendCategory] = useState('needs');
     const [spendDescription, setSpendDescription] = useState('');
-
+    const [errorMessage, setErrorMessage] = useState(''); 
+    const [showModal, setShowModal] = useState(false); 
 
     const addSpend = () => {
         if (spendAmount) {
+            const newSpendAmount = Number(spendAmount);
+            const newTotalSpends = spends.reduce((total, spend) => total + spend.amount, 0) + newSpendAmount;
+
+          
+            if (newTotalSpends > income) {
+                setErrorMessage("You don't have enough income. Please think about your spending."); 
+                setShowModal(true); 
+                return;
+            }
+
             const newSpend = {
-                id: Math.random().toString(36).substr(2, 9), 
+                id: Math.random().toString(36).substr(2, 9),
                 description: spendDescription,
-                amount: Number(spendAmount),
+                amount: newSpendAmount,
                 category: spendCategory
             };
             setSpends([...spends, newSpend]);
             setSpendAmount('');
             setSpendDescription('');
+            setErrorMessage(''); 
+            setShowModal(false);
         }
     };
-
 
     const removeSpend = (id) => {
         const newSpends = spends.filter(spend => spend.id !== id);
         setSpends(newSpends);
     };
-
-
 
     const calculateTotal = (category) => {
         return spends
@@ -42,21 +51,17 @@ const BudgetManager = () => {
     };
 
     const totalSpends = spends.reduce((total, spend) => total + spend.amount, 0);
-
     const totalIncomeAfterSpends = income - totalSpends;
-
 
     const clearIncome = () => {
         setIncome(0);
         setInputIncome('');
     };
 
-
     const handleAddIncome = () => {
         setIncome(income + Number(inputIncome));
         setInputIncome('');
     };
-
 
     const getPercentage = (category) => {
         const total = calculateTotal(category);
@@ -74,8 +79,14 @@ const BudgetManager = () => {
                 a balanced financial life.
             </p>
 
-            <div className="budget-manager">
+            {showModal && (
+                <BudgetModal
+                    message={errorMessage}
+                    onClose={() => setShowModal(false)} 
+                />
+            )}
 
+            <div className="budget-manager">
                 <div className="income-section">
                     <h2>Enter Income</h2>
                     <input
@@ -118,7 +129,6 @@ const BudgetManager = () => {
                 </div>
             </div>
 
-
             <div className="progress-section">
                 <div className="progress-container">
                     <h3>Needs</h3>
@@ -127,12 +137,12 @@ const BudgetManager = () => {
                         text={`${getPercentage('needs').toFixed(0)}%`}
                         styles={{
                             path: {
-                              stroke: `var(--progress-color)`, 
+                                stroke: `var(--progress-color)`,
                             },
                             text: {
-                              fill: `var(--progress-color)`,
+                                fill: `var(--progress-color)`,
                             },
-                          }}
+                        }}
                     />
                     <h4>Total: ${calculateTotal('needs')}</h4>
                     <h4>Target: 50%</h4>
@@ -145,14 +155,13 @@ const BudgetManager = () => {
                         text={`${getPercentage('wants').toFixed(0)}%`}
                         styles={{
                             path: {
-                              stroke: `var(--progress-color)`,
+                                stroke: `var(--progress-color)`,
                             },
                             text: {
-                              fill: `var(--progress-color)`, 
+                                fill: `var(--progress-color)`,
                             },
-                          }}
+                        }}
                     />
-                    
                     <h4>Total: ${calculateTotal('wants')}</h4>
                     <h4>Target: 30%</h4>
                 </div>
@@ -164,19 +173,18 @@ const BudgetManager = () => {
                         text={`${getPercentage('savings').toFixed(0)}%`}
                         styles={{
                             path: {
-                              stroke: `var(--progress-color)`, 
+                                stroke: `var(--progress-color)`,
                             },
                             text: {
-                              fill: `var(--progress-color)`,
+                                fill: `var(--progress-color)`,
                             },
-                          }}
+                        }}
                     />
                     <h4>Total: ${calculateTotal('savings')}</h4>
                     <h4>Target: 20%</h4>
                 </div>
             </div>
 
-   
             <div className="tables-section">
                 <div className="table-container">
                     <h3>Needs</h3>
@@ -199,14 +207,6 @@ const BudgetManager = () => {
                                 </tr>
                             ))}
                         </tbody>
-
-                        <tfoot>
-                            <tr>
-                                <td><strong>Total:</strong></td>
-                                <td><strong>${calculateTotal('needs')}</strong></td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
 
@@ -231,14 +231,6 @@ const BudgetManager = () => {
                                 </tr>
                             ))}
                         </tbody>
-
-                        <tfoot>
-                            <tr>
-                                <td><strong>Total:</strong></td>
-                                <td><strong>${calculateTotal('wants')}</strong></td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
 
@@ -263,14 +255,6 @@ const BudgetManager = () => {
                                 </tr>
                             ))}
                         </tbody>
-
-                        <tfoot>
-                            <tr>
-                                <td><strong>Total:</strong></td>
-                                <td><strong>${calculateTotal('savings')}</strong></td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
