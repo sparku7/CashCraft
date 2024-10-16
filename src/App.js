@@ -23,6 +23,8 @@ import './css/Navbar.css';
 import './css/Quests.css';
 import './app.css';
 
+import { Navigate } from 'react-router-dom'; 
+
 const App = () => {
   return (
     <AuthProvider>
@@ -33,8 +35,8 @@ const App = () => {
               <Navbar />
               <ThemeToggle />
               <Routes>
+                <Route path="/" element={<Navigate to="/login" />} /> 
                 <Route path="/login" element={<Login />} />
-
                 <Route path="/register" element={<Register />} />
                 <Route
                   path="/dashboard"
@@ -75,9 +77,8 @@ const App = () => {
                       <AchievementsPage />
                     </ProtectedRoute>
                   }
-                  
                 />
-              <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+                <Route path="*" element={<h1>404 - Page Not Found</h1>} />
               </Routes>
             </Router>
           </ThemeProvider>
