@@ -28,7 +28,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard">
             <header>
-                <h1>CashCraft</h1>
+                <h1>MoneyMate</h1>
                 <h2>Take Charge of Your Finances</h2>
            
             </header>

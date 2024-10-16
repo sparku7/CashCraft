@@ -21,7 +21,19 @@ const Goals = () => {
     useEffect(() => {
         const totalSavings = goals.reduce((acc, goal) => acc + goal.saved, 0);
         setTotalSavings(totalSavings);
+        if (totalSavings >= 10000 && !localStorage.getItem('achieved_10000')) {
+            setAchievement('Congratulations! You have achieved: £10,000 Saved!');
+            localStorage.setItem('achieved_10000', 'true');
+        } else if (totalSavings >= 5000 && !localStorage.getItem('achieved_5000')) {
+            setAchievement('Congratulations! You have achieved: £5,000 Saved!');
+            localStorage.setItem('achieved_5000', 'true');
+        } else if (totalSavings >= 1000 && !localStorage.getItem('achieved_1000')) {
+            setAchievement('Congratulations! You have achieved: £1,000 Saved!');
+            localStorage.setItem('achieved_1000', 'true');
+        }
     }, [goals, setTotalSavings]);
+
+    
 
     const openEditModal = (index) => {
         setCurrentGoalIndex(index);
@@ -29,14 +41,14 @@ const Goals = () => {
         setNewGoal({ 
             name: goal.name, 
             target: goal.target, 
-            savings: goal.saved // Set to goal.saved instead of 0
+            savings: goal.saved 
         });
         setEditModal(true);
     };
 
     const updateGoal = () => {
         if (currentGoalIndex !== null) {
-            editGoal(currentGoalIndex, newGoal.name, newGoal.target, newGoal.savings); // Pass the updated savings
+            editGoal(currentGoalIndex, newGoal.name, newGoal.target, newGoal.savings); 
             setEditModal(false);
         }
     };
@@ -47,7 +59,7 @@ const Goals = () => {
         setShowModal(false);
     };
 
-    const totalSavings = goals.reduce((acc, goal) => acc + goal.savings, 0);
+    const totalSavings = goals.reduce((acc, goal) => acc + goal.saved, 0);
 
     const handlePopupClose = () => {
         setAchievement(null);

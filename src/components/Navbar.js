@@ -31,7 +31,7 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${theme}`}>
-      <div className="logo">CashCraft</div>
+      <div className="logo">MoneyMate</div>
       <div className="hamburger" onClick={toggleMenu}>
         &#9776;
       </div>
