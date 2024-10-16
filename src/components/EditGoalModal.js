@@ -22,6 +22,13 @@ const EditGoalModal = ({ editModal, setEditModal, newGoal, setNewGoal, updateGoa
                     onChange={(e) => setNewGoal({ ...newGoal, target: e.target.value })}
                     className="modal-input"
                 />
+                <input
+                    type="number"
+                    placeholder="Savings Amount"
+                    value={newGoal.savings}
+                    onChange={(e) => setNewGoal({ ...newGoal, savings: Number(e.target.value) })} // Convert to number
+                    className="modal-input"
+                />
                 <button onClick={updateGoal}>Update Goal</button>
             </div>
         </div>

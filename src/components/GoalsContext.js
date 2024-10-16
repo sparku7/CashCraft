@@ -27,10 +27,10 @@ export const GoalsProvider = ({ children }) => {
         setGoals([...goals, { name, target, saved: 0 }]);
     };
 
-    const editGoal = (index, name, target) => {
+    const editGoal = (index, name, target, savings) => {
         setGoals((prevGoals) =>
             prevGoals.map((goal, i) =>
-                i === index ? { ...goal, name, target: Number(target) } : goal
+                i === index ? { ...goal, name, target: Number(target), saved: savings } : goal
             )
         );
     };
