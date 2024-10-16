@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/Dashboard.css';
 import { useGoals } from './GoalsContext';
 import Balance from './Balance';
 import RecentTransactions from './RecentTransactions';
 import Goal from './Goal';
 import ThemeToggle from './ThemeToggle';
-import { useAuth } from '../components/Auth/AuthContext'; 
-import { useNavigate } from 'react-router-dom'; 
+import TipModal from './TipModal';
 
 const Dashboard = () => {
     const { goals } = useGoals();
-    const { logout } = useAuth(); 
-    const navigate = useNavigate(); 
 
     const transactions = [
         { date: '2024-10-01', description: 'Paycheck', amount: '+£500.00' },
@@ -20,9 +17,36 @@ const Dashboard = () => {
     ];
     const totalBalance = 1234.56;
 
-    const handleLogout = () => {
-        logout(); 
-        navigate('/'); 
+    const [showTipModal, setShowTipModal] = useState(false);
+    const [tip, setTip] = useState('');
+
+    useEffect(() => {
+        const hasSeenTip = localStorage.getItem('hasSeenTip');
+
+        if (!hasSeenTip) {
+        
+            const tips = [
+                "Start saving by setting a budget for non-essential items!",
+                "Track your expenses daily to stay within your budget.",
+                "Automate your savings for hassle-free saving.",
+                "Use cash for discretionary spending to limit expenses.",
+                "Review your subscriptions and cut unnecessary ones.",
+                "Plan meals ahead to avoid impulse buying at the store.",
+                "Set realistic financial goals and track your progress.",
+                "Avoid impulse purchases by waiting 24 hours before buying.",
+                "Consider a side hustle to boost your income.",
+                "Learn about investing to make your money work for you."
+            ];
+
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            setTip(randomTip);
+            setShowTipModal(true);
+            localStorage.setItem('hasSeenTip', 'true');
+        }
+    }, []);
+
+    const closeTipModal = () => {
+        setShowTipModal(false);
     };
 
     return (
@@ -30,7 +54,6 @@ const Dashboard = () => {
             <header>
                 <h1>MoneyMate</h1>
                 <h2>Take Charge of Your Finances</h2>
-           
             </header>
             <ThemeToggle />
 
@@ -45,10 +68,8 @@ const Dashboard = () => {
                     <Goal key={index} goal={goal} />
                 ))}
             </section>
-            <section className="tips">
-                <h3>Financial Tips</h3>
-                <p>Start saving by setting a budget for non-essential items!</p>
-            </section>
+
+            {showTipModal && <TipModal tip={tip} onClose={closeTipModal} />}
         </div>
     );
 };
