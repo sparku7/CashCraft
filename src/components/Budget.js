@@ -17,6 +17,7 @@ const BudgetManager = () => {
         if (spendAmount) {
             const newSpendAmount = Number(spendAmount);
             const newTotalSpends = spends.reduce((total, spend) => total + spend.amount, 0) + newSpendAmount;
+            const totalIncomeAfterSpends = income - newTotalSpends; 
 
           
             if (newTotalSpends > income) {
@@ -83,6 +84,7 @@ const BudgetManager = () => {
                 <BudgetModal
                     message={errorMessage}
                     onClose={() => setShowModal(false)} 
+                    
                 />
             )}
 
