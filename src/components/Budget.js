@@ -46,7 +46,6 @@ const BudgetManager = () => {
     
             const data = await response.json();
     
-           
             if (typeof data === 'number') {
                 setIncome(data); 
             } else {
@@ -56,14 +55,40 @@ const BudgetManager = () => {
             console.error("Error fetching income:", error.message);
         }
     };
+
+    const fetchSpends = async () => {
+        const userItem = localStorage.getItem("user");
+        if (!userItem) return console.error("No user object found in localStorage.");
     
+        const userData = JSON.parse(userItem);
+        const userToken = userData?.token;
+    
+        if (!userToken) return console.error("User is not logged in");
+    
+        try {
+            const response = await fetch("http://localhost:8082/transaction/getAll?name=admin1", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${userToken}`,
+                }
+            });
+    
+            if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+            const data = await response.json();
+            setSpends(data);
+        } catch (error) {
+            console.error("Error fetching spends:", error.message);
+        }
+    };
     
 
     useEffect(() => {
         fetchIncome();
+        fetchSpends(); 
     }, []);
 
-    const addSpend = () => {
+    const addSpend = async () => {
         if (spendAmount) {
             const newSpendAmount = Number(spendAmount);
             const newTotalSpends = spends.reduce((total, spend) => total + spend.amount, 0) + newSpendAmount;
@@ -75,16 +100,52 @@ const BudgetManager = () => {
             }
 
             const newSpend = {
-                id: Math.random().toString(36).substr(2, 9),
+                userName: "admin1",  
+                category: spendCategory,
                 description: spendDescription,
-                amount: newSpendAmount,
-                category: spendCategory
+                transactionType: "Expense",
+                amount: newSpendAmount
             };
-            setSpends([...spends, newSpend]);
-            setSpendAmount('');
-            setSpendDescription('');
-            setErrorMessage('');
-            setShowModal(false);
+
+           
+            const userItem = localStorage.getItem("user");
+
+            if (!userItem) {
+                console.error("No user object found in localStorage.");
+                return;
+            }
+
+            try {
+                const userData = JSON.parse(userItem);
+                const userToken = userData?.token;
+
+                if (!userToken) {
+                    console.error("User is not logged in");
+                    return;
+                }
+
+                const response = await fetch("http://localhost:8082/transaction/new", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${userToken}`,
+                    },
+                    body: JSON.stringify(newSpend),
+                });
+
+                if (response.ok) {
+                    console.log("Spend added successfully");
+                    setSpends([...spends, newSpend]);
+                    setSpendAmount('');
+                    setSpendDescription('');
+                    setErrorMessage('');
+                    setShowModal(false);
+                } else {
+                    console.error("Failed to add spend:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error adding spend:", error);
+            }
         }
     };
 
@@ -288,8 +349,8 @@ const BudgetManager = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {spends.filter(spend => spend.category === 'needs').map(spend => (
-                                <tr key={spend.id}>
+                            {spends.filter(spend => spend.categoryName === 'needs').map(spend => (
+                                <tr key={spend.transactionId}>
                                     <td>{spend.description}</td>
                                     <td>${spend.amount}</td>
                                     <td>
@@ -312,8 +373,8 @@ const BudgetManager = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {spends.filter(spend => spend.category === 'wants').map(spend => (
-                                <tr key={spend.id}>
+                            {spends.filter(spend => spend.categoryName === 'wants').map(spend => (
+                                <tr key={spend.transactionId}>
                                     <td>{spend.description}</td>
                                     <td>${spend.amount}</td>
                                     <td>
@@ -326,28 +387,29 @@ const BudgetManager = () => {
                 </div>
 
                 <div className="table-container">
-                    <h3>Savings</h3>
-                    <table className="budget-table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {spends.filter(spend => spend.category === 'savings').map(spend => (
-                                <tr key={spend.id}>
-                                    <td>{spend.description}</td>
-                                    <td>${spend.amount}</td>
-                                    <td>
-                                        <button onClick={() => removeSpend(spend.id)}>Remove</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+  <h3>Savings</h3>
+  <table className="budget-table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {spends.filter(spend => spend.categoryName === 'savings').map(spend => (
+        <tr key={spend.transactionId}>
+          <td>{spend.description}</td>
+          <td>${spend.amount}</td>
+          <td>
+            <button onClick={() => removeSpend(spend.transactionId)}>Remove</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
             </div>
         </>
     );
