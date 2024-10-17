@@ -135,7 +135,7 @@ const BudgetManager = () => {
 
                 if (response.ok) {
                     console.log("Spend added successfully");
-                    setSpends([...spends, newSpend]);
+                    await fetchSpends();
                     setSpendAmount('');
                     setSpendDescription('');
                     setErrorMessage('');
@@ -156,7 +156,7 @@ const BudgetManager = () => {
 
     const calculateTotal = (category) => {
         return spends
-            .filter(spend => spend.category === category)
+            .filter(spend => spend.categoryName === category)
             .reduce((total, spend) => total + spend.amount, 0);
     };
 
