@@ -16,38 +16,40 @@ const BudgetManager = () => {
 
     const fetchIncome = async () => {
         const userItem = localStorage.getItem("user");
-        
+
         if (!userItem) {
             console.error("No user object found in localStorage.");
             return;
         }
-    
+
         try {
             const userData = JSON.parse(userItem);
             const userToken = userData?.token;
-    
+            const username = userData?.username;
+
             if (!userToken) {
                 console.error("User is not logged in");
                 return;
             }
-    
-            const response = await fetch("http://localhost:8082/transaction/getIncome", {
+
+              const response = await fetch(`http://localhost:8082/transaction/getIncome?name=${username}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${userToken}`,  
+                    "Authorization": `Bearer ${userToken}`,
                 }
             });
-    
+
             if (!response.ok) {
                 console.error(`Server error: ${response.statusText}`);
                 return;
             }
-    
+
             const data = await response.json();
-    
+
             if (typeof data === 'number') {
-                setIncome(data); 
+                setIncome(data);
+                console.log("Fetched Income:", data);  // Add this line
             } else {
                 console.error("Data is not a number:", data);
             }
@@ -62,12 +64,12 @@ const BudgetManager = () => {
     
         const userData = JSON.parse(userItem);
         const userToken = userData?.token;
-        const username = userData?.username; 
+        const username = userData?.username;
     
         if (!userToken) return console.error("User is not logged in");
     
         try {
-            const response = await fetch(`http://localhost:8082/transaction/getAll?name=${username}`, { 
+            const response = await fetch(`http://localhost:8082/transaction/getAll?name=${username}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -77,48 +79,60 @@ const BudgetManager = () => {
     
             if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
             const data = await response.json();
-            setSpends(data);
+    
+     
+            const filteredSpends = data.filter(transaction => transaction.transactionType !== "INCOME");
+    
+            setSpends(filteredSpends);
+            console.log("Fetched Spends:", filteredSpends);  
         } catch (error) {
             console.error("Error fetching spends:", error.message);
         }
     };
     
 
+
     useEffect(() => {
-        fetchIncome();
-        fetchSpends(); 
+        const fetchData = async () => {
+            await fetchIncome();
+            await fetchSpends(); 
+        };
+    
+        fetchData();
     }, []);
 
     const addSpend = async () => {
         if (spendAmount) {
             const newSpendAmount = Number(spendAmount);
+            console.log("Current Spends:", spends);
+console.log("New Spend Amount:", newSpendAmount); 
             const newTotalSpends = spends.reduce((total, spend) => total + spend.amount, 0) + newSpendAmount;
-    
-         
+
+            console.log("New Total Spends:", newTotalSpends); 
             const userItem = localStorage.getItem("user");
             if (!userItem) {
                 console.error("No user object found in localStorage.");
                 return;
             }
-    
-            const userData = JSON.parse(userItem); 
-            const username = userData?.username; 
-            const userToken = userData?.token;    
-    
-            
+
+            const userData = JSON.parse(userItem);
+            const username = userData?.username;
+            const userToken = userData?.token;
+
+
             if (!userToken) {
                 console.error("User is not logged in");
                 return;
             }
-    
-            
+
+
             if (newTotalSpends > income) {
                 setErrorMessage("You don't have enough income. Please think about your spending.");
                 setShowModal(true);
                 return;
             }
-    
-      
+
+
             const newSpend = {
                 userName: username,
                 category: spendCategory,
@@ -126,7 +140,7 @@ const BudgetManager = () => {
                 transactionType: "Expense",
                 amount: newSpendAmount,
             };
-    
+
             try {
                 const response = await fetch("http://localhost:8082/transaction/new", {
                     method: "POST",
@@ -136,7 +150,7 @@ const BudgetManager = () => {
                     },
                     body: JSON.stringify(newSpend),
                 });
-    
+
                 if (response.ok) {
                     console.log("Spend added successfully");
                     await fetchSpends();
@@ -152,7 +166,7 @@ const BudgetManager = () => {
             }
         }
     };
-    
+
 
     const removeSpend = (id) => {
         const newSpends = spends.filter(spend => spend.id !== id);
@@ -184,7 +198,7 @@ const BudgetManager = () => {
         try {
             const userData = JSON.parse(userItem);
             const userToken = userData?.token;
-            const username = userData?.username; 
+            const username = userData?.username;
 
             if (!userToken) {
                 console.error("User is not logged in");
@@ -192,8 +206,7 @@ const BudgetManager = () => {
             }
 
             const incomeData = {
-                userName: username, 
-                transactionId: 1,
+                userName: username,
                 categoryName: "INCOME",
                 transactionType: "INCOME",
                 description: "Income added",
@@ -212,7 +225,8 @@ const BudgetManager = () => {
 
             if (response.ok) {
                 console.log("Income added successfully");
-                fetchIncome();  
+                fetchIncome();
+                console.log("Income After Adding:", await fetchIncome()); 
                 setInputIncome('');
             } else {
                 console.error("Failed to add income:", response.statusText);
@@ -287,6 +301,8 @@ const BudgetManager = () => {
                     <button onClick={addSpend}>Add Spend</button>
                 </div>
             </div>
+
+            
 
             <div className="progress-section">
                 <div className="progress-container">
@@ -394,28 +410,28 @@ const BudgetManager = () => {
                 </div>
 
                 <div className="table-container">
-  <h3>Savings</h3>
-  <table className="budget-table">
-    <thead>
-      <tr>
-        <th>Description</th>
-        <th>Amount</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {spends.filter(spend => spend.categoryName === 'savings').map(spend => (
-        <tr key={spend.transactionId}>
-          <td>{spend.description}</td>
-          <td>${spend.amount}</td>
-          <td>
-            <button onClick={() => removeSpend(spend.transactionId)}>Remove</button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+                    <h3>Savings</h3>
+                    <table className="budget-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {spends.filter(spend => spend.categoryName === 'savings').map(spend => (
+                                <tr key={spend.transactionId}>
+                                    <td>{spend.description}</td>
+                                    <td>${spend.amount}</td>
+                                    <td>
+                                        <button onClick={() => removeSpend(spend.transactionId)}>Remove</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </>
