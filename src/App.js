@@ -81,7 +81,10 @@ const App = () => {
                 />
                 <Route 
                   path="/finance-education" 
-                  element={<FinanceEducation />} 
+                  element={ <ProtectedRoute>
+                    <FinanceEducation />
+                  </ProtectedRoute>} 
+                  
                 /> {/* New route */}
                 <Route path="*" element={<h1>404 - Page Not Found</h1>} />
               </Routes>
