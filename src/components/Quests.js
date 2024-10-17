@@ -6,9 +6,7 @@ import QuestCreation from './QuestCreation';
 
 const Quests = () => {
   const [quests, setQuests] = useState([
-    { id: 1, name: 'Save $100 this month', completed: false },
-    { id: 2, name: 'Track all your expenses for a week', completed: true },
-    { id: 3, name: 'Create a budget for next month', completed: false },
+   
   ]);
 
   const [newQuest, setNewQuest] = useState('');
