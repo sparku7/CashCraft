@@ -49,7 +49,7 @@ const BudgetManager = () => {
 
             if (typeof data === 'number') {
                 setIncome(data);
-                console.log("Fetched Income:", data);  // Add this line
+                console.log("Fetched Income:", data); 
             } else {
                 console.error("Data is not a number:", data);
             }
@@ -168,10 +168,37 @@ console.log("New Spend Amount:", newSpendAmount);
     };
 
 
-    const removeSpend = (id) => {
-        const newSpends = spends.filter(spend => spend.id !== id);
-        setSpends(newSpends);
+    const removeSpend = async (transactionId) => {
+      
+        const payload = {
+            transactionId: transactionId,
+            userName: "",  
+            category: "",  
+            description: "", 
+            transactionType: "", 
+            amount: 0
+        };
+    
+        try {
+            const response = await fetch('http://localhost:8082/transaction/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json', 
+                },
+                body: JSON.stringify(payload),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to delete the transaction');
+            }
+    
+            setSpends(prevSpends => prevSpends.filter(spend => spend.transactionId !== transactionId));
+        } catch (error) {
+            console.error("Error removing spend:", error);
+        }
     };
+    
+    
 
     const calculateTotal = (category) => {
         return spends
@@ -191,6 +218,7 @@ console.log("New Spend Amount:", newSpendAmount);
     
         const userData = JSON.parse(userItem);
         const username = userData?.username;
+        
         const userToken = userData?.token;
     
         if (!username || !userToken) {
@@ -408,79 +436,79 @@ console.log("New Spend Amount:", newSpendAmount);
             </div>
 
             <div className="tables-section">
-                <div className="table-container">
-                    <h3>Needs</h3>
-                    <table className="budget-table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {spends.filter(spend => spend.categoryName === 'needs').map(spend => (
-                                <tr key={spend.transactionId}>
-                                    <td>{spend.description}</td>
-                                    <td>${spend.amount}</td>
-                                    <td>
-                                        <button onClick={() => removeSpend(spend.id)}>Remove</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+    <div className="table-container">
+        <h3>Needs</h3>
+        <table className="budget-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {spends.filter(spend => spend.categoryName === 'needs').map(spend => (
+                    <tr key={spend.transactionId}>
+                        <td>{spend.description}</td>
+                        <td>${spend.amount}</td>
+                        <td>
+                            <button onClick={() => removeSpend(spend.transactionId)}>Remove</button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
 
-                <div className="table-container">
-                    <h3>Wants</h3>
-                    <table className="budget-table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {spends.filter(spend => spend.categoryName === 'wants').map(spend => (
-                                <tr key={spend.transactionId}>
-                                    <td>{spend.description}</td>
-                                    <td>${spend.amount}</td>
-                                    <td>
-                                        <button onClick={() => removeSpend(spend.id)}>Remove</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+    <div className="table-container">
+        <h3>Wants</h3>
+        <table className="budget-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {spends.filter(spend => spend.categoryName === 'wants').map(spend => (
+                    <tr key={spend.transactionId}>
+                        <td>{spend.description}</td>
+                        <td>${spend.amount}</td>
+                        <td>
+                            <button onClick={() => removeSpend(spend.transactionId)}>Remove</button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
 
-                <div className="table-container">
-                    <h3>Savings</h3>
-                    <table className="budget-table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {spends.filter(spend => spend.categoryName === 'savings').map(spend => (
-                                <tr key={spend.transactionId}>
-                                    <td>{spend.description}</td>
-                                    <td>${spend.amount}</td>
-                                    <td>
-                                        <button onClick={() => removeSpend(spend.transactionId)}>Remove</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+    <div className="table-container">
+        <h3>Savings</h3>
+        <table className="budget-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {spends.filter(spend => spend.categoryName === 'savings').map(spend => (
+                    <tr key={spend.transactionId}>
+                        <td>{spend.description}</td>
+                        <td>${spend.amount}</td>
+                        <td>
+                            <button onClick={() => removeSpend(spend.transactionId)}>Remove</button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-            </div>
         </>
     );
 };
