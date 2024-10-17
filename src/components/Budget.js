@@ -62,11 +62,12 @@ const BudgetManager = () => {
     
         const userData = JSON.parse(userItem);
         const userToken = userData?.token;
+        const username = userData?.username; 
     
         if (!userToken) return console.error("User is not logged in");
     
         try {
-            const response = await fetch("http://localhost:8082/transaction/getAll?name=admin1", {
+            const response = await fetch(`http://localhost:8082/transaction/getAll?name=${username}`, { 
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -92,38 +93,41 @@ const BudgetManager = () => {
         if (spendAmount) {
             const newSpendAmount = Number(spendAmount);
             const newTotalSpends = spends.reduce((total, spend) => total + spend.amount, 0) + newSpendAmount;
-
+    
+         
+            const userItem = localStorage.getItem("user");
+            if (!userItem) {
+                console.error("No user object found in localStorage.");
+                return;
+            }
+    
+            const userData = JSON.parse(userItem); 
+            const username = userData?.username; 
+            const userToken = userData?.token;    
+    
+            
+            if (!userToken) {
+                console.error("User is not logged in");
+                return;
+            }
+    
+            
             if (newTotalSpends > income) {
                 setErrorMessage("You don't have enough income. Please think about your spending.");
                 setShowModal(true);
                 return;
             }
-
+    
+      
             const newSpend = {
-                userName: "admin1",  
+                userName: username,
                 category: spendCategory,
                 description: spendDescription,
                 transactionType: "Expense",
-                amount: newSpendAmount
+                amount: newSpendAmount,
             };
-
-           
-            const userItem = localStorage.getItem("user");
-
-            if (!userItem) {
-                console.error("No user object found in localStorage.");
-                return;
-            }
-
+    
             try {
-                const userData = JSON.parse(userItem);
-                const userToken = userData?.token;
-
-                if (!userToken) {
-                    console.error("User is not logged in");
-                    return;
-                }
-
                 const response = await fetch("http://localhost:8082/transaction/new", {
                     method: "POST",
                     headers: {
@@ -132,7 +136,7 @@ const BudgetManager = () => {
                     },
                     body: JSON.stringify(newSpend),
                 });
-
+    
                 if (response.ok) {
                     console.log("Spend added successfully");
                     await fetchSpends();
@@ -148,6 +152,7 @@ const BudgetManager = () => {
             }
         }
     };
+    
 
     const removeSpend = (id) => {
         const newSpends = spends.filter(spend => spend.id !== id);
