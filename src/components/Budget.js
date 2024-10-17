@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../css/Budget.css';
-import BudgetModal from './BudgetModal'; 
+import BudgetModal from './BudgetModal';
+
 const BudgetManager = () => {
     const [income, setIncome] = useState(0);
     const [inputIncome, setInputIncome] = useState('');
@@ -10,19 +11,66 @@ const BudgetManager = () => {
     const [spendAmount, setSpendAmount] = useState('');
     const [spendCategory, setSpendCategory] = useState('needs');
     const [spendDescription, setSpendDescription] = useState('');
-    const [errorMessage, setErrorMessage] = useState(''); 
-    const [showModal, setShowModal] = useState(false); 
+    const [errorMessage, setErrorMessage] = useState('');
+    const [showModal, setShowModal] = useState(false);
+
+    const fetchIncome = async () => {
+        const userItem = localStorage.getItem("user");
+        
+        if (!userItem) {
+            console.error("No user object found in localStorage.");
+            return;
+        }
+    
+        try {
+            const userData = JSON.parse(userItem);
+            const userToken = userData?.token;
+    
+            if (!userToken) {
+                console.error("User is not logged in");
+                return;
+            }
+    
+            const response = await fetch("http://localhost:8082/transaction/getIncome", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${userToken}`,  
+                }
+            });
+    
+            if (!response.ok) {
+                console.error(`Server error: ${response.statusText}`);
+                return;
+            }
+    
+            const data = await response.json();
+    
+           
+            if (typeof data === 'number') {
+                setIncome(data); 
+            } else {
+                console.error("Data is not a number:", data);
+            }
+        } catch (error) {
+            console.error("Error fetching income:", error.message);
+        }
+    };
+    
+    
+
+    useEffect(() => {
+        fetchIncome();
+    }, []);
 
     const addSpend = () => {
         if (spendAmount) {
             const newSpendAmount = Number(spendAmount);
             const newTotalSpends = spends.reduce((total, spend) => total + spend.amount, 0) + newSpendAmount;
-            const totalIncomeAfterSpends = income - newTotalSpends; 
 
-          
             if (newTotalSpends > income) {
-                setErrorMessage("You don't have enough income. Please think about your spending."); 
-                setShowModal(true); 
+                setErrorMessage("You don't have enough income. Please think about your spending.");
+                setShowModal(true);
                 return;
             }
 
@@ -35,7 +83,7 @@ const BudgetManager = () => {
             setSpends([...spends, newSpend]);
             setSpendAmount('');
             setSpendDescription('');
-            setErrorMessage(''); 
+            setErrorMessage('');
             setShowModal(false);
         }
     };
@@ -59,9 +107,51 @@ const BudgetManager = () => {
         setInputIncome('');
     };
 
-    const handleAddIncome = () => {
-        setIncome(income + Number(inputIncome));
-        setInputIncome('');
+    const handleAddIncome = async () => {
+        const userItem = localStorage.getItem("user");
+
+        if (!userItem) {
+            console.error("No user object found in localStorage.");
+            return;
+        }
+
+        try {
+            const userData = JSON.parse(userItem);
+            const userToken = userData?.token;
+
+            if (!userToken) {
+                console.error("User is not logged in");
+                return;
+            }
+
+            const incomeData = {
+                transactionId: 1,
+                categoryName: "INCOME",
+                transactionType: "INCOME",
+                description: "Income added",
+                amount: Number(inputIncome),
+                date: new Date().toISOString().split("T")[0],
+            };
+
+            const response = await fetch("http://localhost:8082/transaction/new", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${userToken}`,
+                },
+                body: JSON.stringify(incomeData),
+            });
+
+            if (response.ok) {
+                console.log("Income added successfully");
+                fetchIncome();  
+                setInputIncome('');
+            } else {
+                console.error("Failed to add income:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error parsing user object from localStorage or adding income:", error);
+        }
     };
 
     const getPercentage = (category) => {
@@ -83,8 +173,7 @@ const BudgetManager = () => {
             {showModal && (
                 <BudgetModal
                     message={errorMessage}
-                    onClose={() => setShowModal(false)} 
-                    
+                    onClose={() => setShowModal(false)}
                 />
             )}
 
