@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode'; // Update this line
 
 const AuthContext = createContext();
 
@@ -23,10 +24,12 @@ export const AuthProvider = ({ children }) => {
             });
 
             if (response.data.statusCode === 200) {
+                const token = response.data.token; // Get the token from the response
+                const decoded = jwtDecode(token); // Decode the token
                 const loggedUser = { 
-                    username: response.data.name,
+                    username: decoded.sub, // Use the username from the decoded token
                     role: response.data.role,
-                    token: response.data.token 
+                    token: token 
                 };
                 setUser(loggedUser);
                 localStorage.setItem('user', JSON.stringify(loggedUser)); 
