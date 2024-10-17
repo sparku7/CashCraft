@@ -182,10 +182,57 @@ console.log("New Spend Amount:", newSpendAmount);
     const totalSpends = spends.reduce((total, spend) => total + spend.amount, 0);
     const totalIncomeAfterSpends = income - totalSpends;
 
-    const clearIncome = () => {
-        setIncome(0);
-        setInputIncome('');
+    const clearIncome = async () => {
+        const userItem = localStorage.getItem("user");
+        if (!userItem) {
+            console.error("No user object found in localStorage.");
+            return;
+        }
+    
+        const userData = JSON.parse(userItem);
+        const username = userData?.username;
+        const userToken = userData?.token;
+    
+        if (!username || !userToken) {
+            console.error("User is not logged in");
+            return;
+        }
+    
+        try {
+          
+            const body = {
+                userName: username,
+                category: "", 
+                description: "",  
+                transactionType: "income",
+                amount: 0 
+            };
+    
+            const response = await fetch("http://localhost:8082/transaction/delete", {
+                method: "DELETE",  
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${userToken}` 
+                },
+                body: JSON.stringify(body)
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.statusText}`);
+            }
+    
+         
+            const data = await response.json();
+            console.log("Income cleared:", data);  
+    
+       
+            setIncome(0);
+            setInputIncome('');
+        } catch (error) {
+            console.error("Error clearing income:", error.message);
+        }
     };
+    
 
     const handleAddIncome = async () => {
         const userItem = localStorage.getItem("user");
