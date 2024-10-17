@@ -8,6 +8,10 @@ const EditGoalModal = ({ editModal, setEditModal, newGoal, setNewGoal, updateGoa
             <div className="modal-content">
                 <span className="close" onClick={() => setEditModal(false)}>&times;</span>
                 <h2>Edit Goal</h2>
+
+                <span>Goal Name</span>
+                <br></br>
+                   <br></br>
                 <input
                     type="text"
                     placeholder="Goal Name"
@@ -15,6 +19,9 @@ const EditGoalModal = ({ editModal, setEditModal, newGoal, setNewGoal, updateGoa
                     onChange={(e) => setNewGoal({ ...newGoal, name: e.target.value })}
                     className="modal-input"
                 />
+                   <span>Target</span>
+                   <br></br>
+                   <br></br>
                 <input
                     type="number"
                     placeholder="Target Amount"
@@ -22,6 +29,9 @@ const EditGoalModal = ({ editModal, setEditModal, newGoal, setNewGoal, updateGoa
                     onChange={(e) => setNewGoal({ ...newGoal, target: e.target.value })}
                     className="modal-input"
                 />
+                   <span>Amount Saved</span>
+                   <br></br>
+                   <br></br>
                 <input
                     type="number"
                     placeholder="Savings Amount"

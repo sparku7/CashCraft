@@ -4,8 +4,8 @@ const AchievementPopup = ({ achievement, handleViewAchievement, handlePopupClose
     if (!achievement) return null;
 
     return (
-        <div className="modal achievement-popup">
-            <div className="popup-content">
+        <div className="modal">
+            <div className="modal-content">
                 <h2>Achievement Unlocked!</h2>
                 <p>{achievement}</p>
                 <button onClick={handleViewAchievement}>View Achievement</button>
