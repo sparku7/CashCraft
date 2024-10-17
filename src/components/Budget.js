@@ -184,6 +184,7 @@ const BudgetManager = () => {
         try {
             const userData = JSON.parse(userItem);
             const userToken = userData?.token;
+            const username = userData?.username; 
 
             if (!userToken) {
                 console.error("User is not logged in");
@@ -191,6 +192,7 @@ const BudgetManager = () => {
             }
 
             const incomeData = {
+                userName: username, 
                 transactionId: 1,
                 categoryName: "INCOME",
                 transactionType: "INCOME",
