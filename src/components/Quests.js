@@ -64,9 +64,26 @@ const Quests = () => {
     }
   };
 
-  const deleteQuest = (id) => {
-    setQuests(quests.filter((quest) => quest.questId !== id));
+  const deleteQuest = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8083/quests/delete?questId=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to delete quest');
+      }
+  
+         setQuests(quests.filter((quest) => quest.questId !== id));
+    } catch (error) {
+      console.error('Error deleting quest:', error);
+      alert('Failed to delete the quest.');
+    }
   };
+  
 
 
   const addQuest = () => {
