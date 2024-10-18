@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const QuestCreation = ({ newQuest, setNewQuest, addQuest, errorMessage }) => {
+const QuestCreation = ({ onAddQuest }) => {
+  const [newQuest, setNewQuest] = useState('');
+  
   const handleAddQuest = async () => {
     const storedUser = JSON.parse(localStorage.getItem('user')); 
     const userName = storedUser?.username; 
@@ -29,8 +31,8 @@ const QuestCreation = ({ newQuest, setNewQuest, addQuest, errorMessage }) => {
       }
 
       const addedQuest = await response.json();
-      addQuest(addedQuest); 
-      setNewQuest(''); 
+      onAddQuest(addedQuest); // Call the function passed down from Quests.js
+      setNewQuest(''); // Clear input field after adding quest
     } catch (error) {
       console.error('Error adding quest:', error);
       alert('Failed to add quest: ' + error.message);
@@ -47,7 +49,6 @@ const QuestCreation = ({ newQuest, setNewQuest, addQuest, errorMessage }) => {
         value={newQuest}
         onChange={(e) => setNewQuest(e.target.value)}
       />
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <button onClick={handleAddQuest}>Add Quest</button>
     </section>
   );

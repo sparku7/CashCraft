@@ -6,7 +6,6 @@ import QuestCreation from './QuestCreation';
 
 const Quests = () => {
   const [quests, setQuests] = useState([]);
-  const [newQuest, setNewQuest] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -77,27 +76,15 @@ const Quests = () => {
         throw new Error('Failed to delete quest');
       }
   
-         setQuests(quests.filter((quest) => quest.questId !== id));
+      setQuests(quests.filter((quest) => quest.questId !== id));
     } catch (error) {
       console.error('Error deleting quest:', error);
       alert('Failed to delete the quest.');
     }
   };
-  
 
-
-  const addQuest = () => {
-    if (newQuest.trim() === '') {
-      setErrorMessage('Quest name cannot be empty.');
-      return;
-    }
-    setErrorMessage('');
-    
-    const newId = quests.length > 0 ? quests[quests.length - 1].questId + 1 : 1; 
-    const newQuestObj = { questId: newId, questName: newQuest, completed: false, enabled: true };
-
-    setQuests([...quests, newQuestObj]);
-    setNewQuest('');
+  const handleAddQuest = (addedQuest) => {
+    setQuests([...quests, addedQuest]); // This ensures only one addition
   };
 
   const totalQuests = quests.length;
@@ -112,7 +99,6 @@ const Quests = () => {
 
       <QuestProgress completed={completedQuests} total={totalQuests} />
 
-   
       <section className="active-quests">
         <h3>Active Quests</h3>
         <QuestList 
@@ -123,7 +109,6 @@ const Quests = () => {
         />
       </section>
 
-    
       <section className="completed-quests">
         <h3>Completed Quests</h3>
         <QuestList 
@@ -135,10 +120,7 @@ const Quests = () => {
       </section>
 
       <QuestCreation 
-        newQuest={newQuest} 
-        setNewQuest={setNewQuest} 
-        addQuest={addQuest} 
-        errorMessage={errorMessage} 
+        onAddQuest={handleAddQuest} 
       />
     </div>
   );
