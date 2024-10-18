@@ -1,0 +1,50 @@
+.toast {
+    position: fixed;
+    top: 20px; 
+    right: 20px; 
+    background-color: #fff; 
+    color: #333; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    padding: 20px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
+    text-align: center; 
+    opacity: 1; 
+    transform: scale(1); 
+    animation: explode 0.5s forwards; 
+}
+
+.countdown-bar {
+    height: 5px; 
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); 
+    border-radius: 0 0 5px 5px; 
+    transition: width 1s linear; 
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0.5); 
+    }
+    50% {
+        transform: scale(1.2); 
+    }
+    100% {
+        transform: scale(1); 
+    }
+}
+
+.close-button {
+    margin-top: 10px; 
+    padding: 5px 10px; 
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.close-button:hover {
+    background-color: #0056b3; 
+}

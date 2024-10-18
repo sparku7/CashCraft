@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Update this line
+import { jwtDecode } from 'jwt-decode'; 
 
 const AuthContext = createContext();
 
@@ -24,10 +24,10 @@ export const AuthProvider = ({ children }) => {
             });
 
             if (response.data.statusCode === 200) {
-                const token = response.data.token; // Get the token from the response
-                const decoded = jwtDecode(token); // Decode the token
+                const token = response.data.token;
+                const decoded = jwtDecode(token); 
                 const loggedUser = { 
-                    username: decoded.sub, // Use the username from the decoded token
+                    username: decoded.sub, 
                     role: response.data.role,
                     token: token 
                 };
@@ -48,8 +48,10 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('hasSeenTip');
     };
 
+    const isAuthenticated = user !== null; 
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+        <AuthContext.Provider value={{ user, login, logout, isAuthenticated, isLoading }}>
             {children}
         </AuthContext.Provider>
     );

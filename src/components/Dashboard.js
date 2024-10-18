@@ -5,26 +5,26 @@ import Balance from './Balance';
 import RecentTransactions from './RecentTransactions';
 import Goal from './Goal';
 import ThemeToggle from './ThemeToggle';
-import TipModal from './TipModal';
+import TipToast from './TipToast'; 
 
 const Dashboard = () => {
     const { goals } = useGoals();
 
     const transactions = [
-        { date: '2024-10-01', description: 'Paycheck', amount: '+£500.00' },
-        { date: '2024-10-03', description: 'Grocery', amount: '-£50.00' },
-        { date: '2024-10-05', description: 'Snacks', amount: '-£20.00' },
+        { date: '2024-10-01', description: 'Salary', amount: '+£500.00' },
+        { date: '2024-10-03', description: 'Tesco', amount: '-£50.00' },
+        { date: '2024-10-05', description: 'Munchies', amount: '-£20.00' },
+        { date: '2024-10-05', description: 'Maccy Ds', amount: '-£10.00' },
     ];
     const totalBalance = 1234.56;
 
-    const [showTipModal, setShowTipModal] = useState(false);
+    const [showTipToast, setShowTipToast] = useState(false);
     const [tip, setTip] = useState('');
 
     useEffect(() => {
         const hasSeenTip = localStorage.getItem('hasSeenTip');
 
         if (!hasSeenTip) {
-        
             const tips = [
                 "Start saving by setting a budget for non-essential items!",
                 "Track your expenses daily to stay within your budget.",
@@ -40,13 +40,13 @@ const Dashboard = () => {
 
             const randomTip = tips[Math.floor(Math.random() * tips.length)];
             setTip(randomTip);
-            setShowTipModal(true);
+            setShowTipToast(true);
             localStorage.setItem('hasSeenTip', 'true');
         }
     }, []);
 
-    const closeTipModal = () => {
-        setShowTipModal(false);
+    const closeTipToast = () => {
+        setShowTipToast(false);
     };
 
     return (
@@ -69,7 +69,7 @@ const Dashboard = () => {
                 ))}
             </section>
 
-            {showTipModal && <TipModal tip={tip} onClose={closeTipModal} />}
+            {showTipToast && <TipToast tip={tip} onClose={closeTipToast} />} {/* Update this line */}
         </div>
     );
 };

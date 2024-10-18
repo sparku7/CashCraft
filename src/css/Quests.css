@@ -22,7 +22,7 @@
 }
 
 .quest-card.completed {
-  background-color: #e0ffe0;
+  background-color:var(--quest-color);
   text-decoration: line-through;
 }
 

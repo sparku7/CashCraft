@@ -6,7 +6,7 @@ import '../css/Navbar.css';
 
 const Navbar = () => {
   const { theme } = useTheme();
-  const { logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth(); 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -15,7 +15,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout(); 
- 
   };
 
   useEffect(() => {
@@ -36,18 +35,21 @@ const Navbar = () => {
         &#9776;
       </div>
       <ul className={isOpen ? 'active' : ''}>
-        <li><Link to="/login" onClick={toggleMenu}>Dashboard</Link></li>
-        <li><Link to="/budget" onClick={toggleMenu}>Budget</Link></li>
-        <li><Link to="/goals" onClick={toggleMenu}>Goals</Link></li>
-        <li><Link to="/quests" onClick={toggleMenu}>Quests</Link></li>
-        <li><Link to="/achievements" onClick={toggleMenu}>Achievements</Link></li>
-        <li><Link to="/finance-education" onClick={toggleMenu}>Finance Fun Zone!</Link></li> 
-        <li>
-        <li>
-  <button onClick={handleLogout} className="logout-button">Logout</button>
-</li>
-
-        </li>
+        {isAuthenticated ? ( 
+          <>
+            <li><Link to="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
+            <li><Link to="/budget" onClick={toggleMenu}>Budget</Link></li>
+            <li><Link to="/goals" onClick={toggleMenu}>Goals</Link></li>
+            <li><Link to="/quests" onClick={toggleMenu}>Quests</Link></li>
+            <li><Link to="/achievements" onClick={toggleMenu}>Achievements</Link></li>
+            <li><Link to="/finance-education" onClick={toggleMenu}>Finance Fun Zone!</Link></li>
+            <li>
+              <button onClick={handleLogout} className="logout-button">Logout</button>
+            </li>
+          </>
+        ) : (
+          <li><Link to="/login" onClick={toggleMenu}>Login</Link></li>
+        )}
       </ul>
     </nav>
   );
