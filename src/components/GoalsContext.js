@@ -92,9 +92,26 @@ export const GoalsProvider = ({ children }) => {
     
     
 
-    const removeGoal = (index) => {
-        setGoals((prevGoals) => prevGoals.filter((_, i) => i !== index));
+    const removeGoal = async (index) => {
+        const goalToRemove = goals[index]; 
+        const goalId = goalToRemove.categoryId; 
+    
+        try {
+            const response = await axios.delete(`http://localhost:8083/goals/delete`, {
+                params: { goalId }
+            });
+    
+            if (response.status === 200) {
+             
+                setGoals((prevGoals) => prevGoals.filter((_, i) => i !== index));
+            } else {
+                console.error('Failed to remove goal:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error removing goal:', error);
+        }
     };
+    
 
     return (
         <GoalsContext.Provider 

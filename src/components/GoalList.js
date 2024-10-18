@@ -1,7 +1,10 @@
 import React from 'react';
+import { useGoals } from './GoalsContext';
 import Goal from './Goal';
 
-const GoalList = ({ goals, openEditModal, removeGoal }) => {
+const GoalList = ({ openEditModal }) => {
+    const { goals, removeGoal } = useGoals();
+
     return (
         <ul>
             {goals.map((goal, index) => (

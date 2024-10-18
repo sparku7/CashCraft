@@ -6,8 +6,8 @@ const EditGoalModal = ({ editModal, setEditModal, newGoal, setNewGoal, updateGoa
             setNewGoal((prev) => ({
                 ...prev,
                 name: prev.name || "",
-                target: prev.target || 0,
-                savings: prev.savings || 0,
+                target: prev.target || "",
+                savings: prev.savings || "",  
             }));
         }
     }, [editModal, setNewGoal]); 
@@ -35,8 +35,8 @@ const EditGoalModal = ({ editModal, setEditModal, newGoal, setNewGoal, updateGoa
                 <input
                     type="number"
                     placeholder="Target Amount"
-                    value={newGoal.target}
-                    onChange={(e) => setNewGoal({ ...newGoal, target: Number(e.target.value) })}
+                    value={newGoal.target === "" ? "" : newGoal.target}  
+                    onChange={(e) => setNewGoal({ ...newGoal, target: e.target.value === "" ? "" : Number(e.target.value) })}
                     className="modal-input"
                 />
                 <br /><br />
@@ -46,8 +46,8 @@ const EditGoalModal = ({ editModal, setEditModal, newGoal, setNewGoal, updateGoa
                 <input
                     type="number"
                     placeholder="Savings Amount"
-                    value={newGoal.savings}
-                    onChange={(e) => setNewGoal({ ...newGoal, savings: Number(e.target.value) })}
+                    value={newGoal.savings === "" ? "" : newGoal.savings} 
+                    onChange={(e) => setNewGoal({ ...newGoal, savings: e.target.value === "" ? "" : Number(e.target.value) })}
                     className="modal-input"
                 />
                 <br /><br />
