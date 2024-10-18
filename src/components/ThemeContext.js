@@ -7,7 +7,7 @@ import PumpkinAnimation from './PumpkinAnimation';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'minecraft');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'standard');
   const [animationActive, setAnimationActive] = useState(false); 
 
   const toggleTheme = (newTheme) => {
@@ -67,6 +67,17 @@ const themes = {
     '--modal-bg-color': '#333',
     '--progress-color': '#ff7518',
   },
+
+  standard: {
+    '--font-family': "'Arial', sans-serif",
+    '--background-color': '#f5f5f5',   
+    '--text-color': '#333333',        
+    '--button-bg-color': '#007bff',    
+    '--button-hover-color': '#0056b3',
+    '--modal-bg-color': '#ffffff',     
+    '--progress-color': '#28a745',    
+  },
+  
   christmas: {
     '--font-family': "'Christmas'",
     '--background-color': '#e0e0e0',

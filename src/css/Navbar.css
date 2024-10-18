@@ -30,6 +30,10 @@ ul.active .logout-button {
   font-size: 16px;
 }
 
+.navbar.standard {
+  background-image: none;
+  background-color: #007bff; 
+}
 
 .navbar.minecraft {
   background-image: url('../images/navbar-background.webp');
